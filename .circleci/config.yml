@@ -29,9 +29,11 @@ workflows:
             - cypress/install
             - build-and-test
           start: "npm start"
+          wait-on: "http://localhost:3000"
+          no-workspace: true
       - deploy:
           filters:
             branches:
               only: master
           requires:
-            - build-and-test
+            - cypress/run
