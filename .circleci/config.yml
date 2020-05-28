@@ -4,13 +4,13 @@ orbs:
   heroku: circleci/heroku@1.0.1
 jobs:
   build-and-test:
-    executor: node/default
+    docker:
+      - image: circleci/node:12.16
     steps:
       - checkout
-      - node/with-cache:
-          steps:
-            - run: npm install
-            - run: npm test
+      - node/install-packages
+      - run:
+          command: npm run test
   deploy:
     executor: heroku/default
     steps:
