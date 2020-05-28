@@ -25,7 +25,7 @@ workflows:
       - cypress/install:
           build: "npm run build"
       - cypress/run:
-          command: npm run ci:cypress
+          command: sed -i '/process.env.CI/,+7 d' node_modules/react-scripts/scripts/start.js && npm run ci:cypress
           requires:
             - cypress/install
             - build-and-test
