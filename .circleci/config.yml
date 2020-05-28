@@ -2,6 +2,7 @@ version: 2.1
 orbs:
   node: circleci/node@2.1.1
   heroku: circleci/heroku@1.0.1
+  cypress: cypress-io/cypress@1.23.0
 jobs:
   build-and-test:
     docker:
@@ -21,6 +22,8 @@ workflows:
   run:
     jobs:
       - build-and-test
+      - cypress/run:
+          start: npm start
       - deploy:
           filters:
             branches:
