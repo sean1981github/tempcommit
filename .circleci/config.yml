@@ -11,7 +11,11 @@ jobs:
       - checkout
       - node/install-packages
       - run:
-          command: npm run test
+          name: Run Test Coverage
+          command: npm run testc
+      - run:
+          name: Sonar Scanner
+          command: npm run sonar
   deploy:
     executor: heroku/default
     steps:

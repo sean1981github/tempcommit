@@ -14,10 +14,12 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "testc": "react-scripts test --coverage --watchAll=false --testResultsProcessor ./node_modules/jest-sonar-reporter",
     "eject": "react-scripts eject",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
-    "ci:cypress": "start-server-and-test start http://localhost:3000 cy:run"
+    "ci:cypress": "start-server-and-test start http://localhost:3000 cy:run",
+    "sonar": "sonar-scanner -Dsonar.host.url=$SONAR_SERVER_URL -Dsonar.login=$SONAR_TOKEN"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -36,6 +38,22 @@
   },
   "devDependencies": {
     "cypress": "^4.7.0",
+    "jest-sonar-reporter": "^2.0.0",
+    "sonarqube-scanner": "^2.6.0",
     "start-server-and-test": "^1.11.0"
+  },
+  "jest": {
+    "coverageThreshold": {
+      "global": {
+        "branches": 85,
+        "functions": 95,
+        "lines": 95,
+        "statements": 95
+      }
+    },
+    "coveragePathIgnorePatterns": [
+      "src/index.js",
+      "src/serviceWorker.js"
+    ]
   }
 }
