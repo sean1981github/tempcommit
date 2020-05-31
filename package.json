@@ -24,7 +24,10 @@
     "sonar:gateway": "node sonar-scripts/checkGateway.js",
     "app:lint": "eslint src/",
     "cy:lint": "eslint cypress/",
-    "lint": "npm run app:lint && npm run cy:lint"
+    "lint": "npm run app:lint && npm run cy:lint",
+    "docker:build": "docker build -t case-frontend .",
+    "docker:run": "docker run -it -v /app/node_modules -v $(pwd):/app -p 3000:3000 case-frontend",
+    "docker:test": "docker run -it -v /app/node_modules -v $(pwd):/app case-frontend npm run test"
   },
   "eslintConfig": {
     "extends": "react-app"

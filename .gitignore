@@ -2,6 +2,7 @@ node_modules
 
 .scannerwork/
 
+build
 coverage/
 
 test-report.xml
