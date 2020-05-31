@@ -11,6 +11,9 @@ jobs:
       - checkout
       - node/install-packages
       - run:
+          name: Check Lint
+          command: npm run lint
+      - run:
           name: Run Test Coverage
           command: npm run testc
       - run:
