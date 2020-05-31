@@ -15,7 +15,10 @@ jobs:
           command: npm run testc
       - run:
           name: Sonar Scanner
-          command: npm run sonar
+          command: npm run sonar:scan
+      - run:
+          name: Sonar Gateway
+          command: npm run sonar:gateway
   deploy:
     executor: heroku/default
     steps:
