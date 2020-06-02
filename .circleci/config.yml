@@ -23,7 +23,7 @@ jobs:
           command: npm run sonar:gateway
   test-end-to-end:
     docker:
-      - image: circleci/node:12.16
+      - image: cypress/base:12
     steps:
       - checkout
       - node/install-packages
