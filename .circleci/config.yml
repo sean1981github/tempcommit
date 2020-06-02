@@ -2,7 +2,6 @@ version: 2.1
 orbs:
   node: circleci/node@2.1.1
   heroku: circleci/heroku@1.0.1
-  cypress: cypress-io/cypress@1.23.0
 jobs:
   build-and-test:
     docker:
@@ -22,6 +21,15 @@ jobs:
       - run:
           name: Sonar Gateway
           command: npm run sonar:gateway
+  test-end-to-end:
+    docker:
+      - image: circleci/node:12.16
+    steps:
+      - checkout
+      - node/install-packages
+      - run:
+          name: Run cypress tests
+          command: sed -i '/process.env.CI/,+7 d' node_modules/react-scripts/scripts/start.js && npm run ci:cypress
   deploy:
     executor: heroku/default
     steps:
@@ -32,11 +40,9 @@ workflows:
   run:
     jobs:
       - build-and-test
-      - cypress/run:
-          command: sed -i '/process.env.CI/,+7 d' node_modules/react-scripts/scripts/start.js && npm run ci:cypress
+      - test-end-to-end:
           requires:
             - build-and-test
-          no-workspace: true
       - deploy:
           filters:
             branches:
