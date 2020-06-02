@@ -32,11 +32,9 @@ workflows:
   run:
     jobs:
       - build-and-test
-      - cypress/install
       - cypress/run:
           command: sed -i '/process.env.CI/,+7 d' node_modules/react-scripts/scripts/start.js && npm run ci:cypress
           requires:
-            - cypress/install
             - build-and-test
           no-workspace: true
       - deploy:
