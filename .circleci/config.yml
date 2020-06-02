@@ -48,4 +48,4 @@ workflows:
             branches:
               only: master
           requires:
-            - cypress/run
+            - test-end-to-end
