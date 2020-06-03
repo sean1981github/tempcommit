@@ -1,6 +1,6 @@
 import React from "react";
 
-const MockPage = (props) => {
+const mockPage = (props) => {
   return <div>Login as {props.location.state.role} successfully </div>;
 };
-export default MockPage;
+export default mockPage;

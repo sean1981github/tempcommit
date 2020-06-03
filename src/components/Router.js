@@ -1,9 +1,9 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 import Login from "./LoginHandle";
-import MockPage from "./MockPage";
+import MockPage from "./mockPage";
 
-const Router = () => (
+const router = () => (
   <div>
     <Switch>
       <Route exact path="/" component={Login} />
@@ -13,4 +13,4 @@ const Router = () => (
   </div>
 );
 
-export default Router;
+export default router;

@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LoginForm = (props) => {
+const loginForm = (props) => {
   const classes = useStyles();
   return (
     <div className="container">
@@ -67,4 +67,4 @@ const LoginForm = (props) => {
   );
 };
 
-export default LoginForm;
+export default loginForm;

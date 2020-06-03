@@ -1,12 +1,9 @@
 import React from "react";
 import MockAdapter from "axios-mock-adapter";
-
 import "@testing-library/jest-dom/extend-expect";
-import "../App";
-
 import { render, fireEvent, waitForElement } from "@testing-library/react";
 import App from "../App";
-import Axios from "../utils/axios";
+import Axios from "../utils/axiosInstance";
 
 const mockAxios = new MockAdapter(Axios);
 

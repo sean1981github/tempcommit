@@ -1,10 +1,12 @@
 import React, { Fragment } from "react";
-import Loader from "./Spinner";
-import Login from "./LoginForm";
-import Axios from "../utils/axios";
+import Loader from "./spinner";
+import Login from "./loginForm";
+import Axios from "../utils/axiosInstance";
 import "./LoginForm.css";
 
-class LoginPage extends React.Component {
+const STATUS_OK = 200;
+
+class LoginHandle extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -31,32 +33,33 @@ class LoginPage extends React.Component {
     const password = this.state.password;
     this.setState({ errorMessage: null });
 
-    if (!username || username.length === 0) {
-      if (!password || password.length === 0) {
-        this.setState({
-          isLoading: false,
-          errorMessage: "Username and password should not be empty",
-        });
-      } else {
-        this.setState({
-          isLoading: false,
-          errorMessage: "Username should not be empty",
-        });
-      }
-    } else if (!password || password.length === 0) {
+    const invalidUsername = !username || username.length === 0;
+    const invalidPassword = !password || password.length === 0;
+
+    if (invalidUsername && invalidPassword) {
+      this.setState({
+        isLoading: false,
+        errorMessage: "Username and password should not be empty",
+      });
+    } else if (invalidUsername) {
+      this.setState({
+        isLoading: false,
+        errorMessage: "Username should not be empty",
+      });
+    } else if (invalidPassword) {
       this.setState({
         isLoading: false,
         errorMessage: "Password should not be empty",
       });
     } else {
       const user = {
-        username: username,
-        password: password,
+        username,
+        password,
       };
 
       Axios.post("/users/login", user)
         .then((res) => {
-          if (res.status === 200) {
+          if (res.status === STATUS_OK) {
             this.setState({
               isLoading: false,
             });
@@ -86,32 +89,32 @@ class LoginPage extends React.Component {
     }
   };
 
+  showLoginForm = () => {
+    return (
+      <Fragment>
+        <Login
+          username={this.state.username}
+          password={this.state.password}
+          handleUsername={this.handleUsername}
+          handlePassword={this.handlePassword}
+          handleLogin={this.handleLogin}
+        />
+        {this.state.errorMessage ? (
+          <div className="error" data-testid="error">
+            {this.state.errorMessage}
+          </div>
+        ) : (
+          <div></div>
+        )}
+      </Fragment>
+    );
+  };
+
   render() {
     return (
-      <div>
-        {this.state.isLoading ? (
-          <Loader />
-        ) : (
-          <Fragment>
-            <Login
-              username={this.state.username}
-              password={this.state.password}
-              handleUsername={this.handleUsername}
-              handlePassword={this.handlePassword}
-              handleLogin={this.handleLogin}
-            />
-            {this.state.errorMessage ? (
-              <div className="error" data-testid="error">
-                {this.state.errorMessage}
-              </div>
-            ) : (
-              <div></div>
-            )}
-          </Fragment>
-        )}
-      </div>
+      <div>{this.state.isLoading ? <Loader /> : this.showLoginForm()}</div>
     );
   }
 }
 
-export default LoginPage;
+export default LoginHandle;
