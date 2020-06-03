@@ -3,7 +3,7 @@ describe("Hello Cypress", () => {
     cy.visit("http://localhost:3000");
   });
 
-  it("should render Hello World! text", () => {
-    cy.contains("Hello World!");
+  it("should render WELCOME TO CASE text", () => {
+    cy.contains("WELCOME TO CASE");
   });
 });
