@@ -63,7 +63,6 @@ class LoginPage extends React.Component {
 
             this.props.history.push("/mock-page", { role: res.data });
           } else {
-            console.log(res.status);
             this.setState({
               isLoading: false,
               errorMessage: "Something is wrong.Please try again",

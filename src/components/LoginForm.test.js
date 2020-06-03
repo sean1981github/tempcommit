@@ -63,7 +63,7 @@ describe("LoginForm", () => {
       target: { value: "password" },
     });
     fireEvent.click(signinButton);
-    mockAxios.onPost("http://localhost:5000/users/login").timeout();
+    mockAxios.onPost("/users/login").timeout();
     await waitForElement(() =>
       getByText("Something is wrong.Please try again")
     );
@@ -106,7 +106,7 @@ describe("LoginForm", () => {
       target: { value: "password" },
     });
     fireEvent.click(signinButton);
-    mockAxios.onPost("http://localhost:5000/users/login").reply(203);
+    mockAxios.onPost("/users/login").reply(203);
 
     await waitForElement(() =>
       getByText("Something is wrong.Please try again")
@@ -128,7 +128,7 @@ describe("LoginForm", () => {
       target: { value: "password" },
     });
     fireEvent.click(signinButton);
-    mockAxios.onPost("http://localhost:5000/users/login").reply(200, "HR");
+    mockAxios.onPost("/users/login").reply(200, "HR");
 
     await waitForElement(() => getByText("Login as HR successfully"));
     expect(getByText("Login as HR successfully")).toBeInTheDocument();
