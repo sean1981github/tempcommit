@@ -7,7 +7,7 @@ import Axios from "../utils/axiosInstance";
 
 const mockAxios = new MockAdapter(Axios);
 
-describe("LoginForm", () => {
+describe("LoginPage", () => {
   beforeEach(() => {
     mockAxios.reset();
   });

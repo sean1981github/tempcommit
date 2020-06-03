@@ -1,7 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { TextField, Button, Typography } from "@material-ui/core";
-import "./LoginForm.css";
+import "./loginPage.css";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const loginForm = (props) => {
+const loginPage = (props) => {
   const classes = useStyles();
   return (
     <div className="container">
@@ -67,4 +67,4 @@ const loginForm = (props) => {
   );
 };
 
-export default loginForm;
+export default loginPage;
