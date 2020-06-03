@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 import Login from "./LoginHandle";
-import MockPage from "./mockHomePage";
+import MockPage from "./MockPage";
 
 const myRouter = () => (
   <div>

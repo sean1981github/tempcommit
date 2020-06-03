@@ -1,8 +1,8 @@
 import React, { Fragment } from "react";
-import Loader from "./loader";
-import Login from "./LoginPage";
+import Loader from "./Spinner";
+import Login from "./Login";
 import Axios from "../utils/axiosInstance";
-import "./loginPage.css";
+import "./Login.css";
 const STATUS_OK = 200;
 
 class LoginHandle extends React.Component {
