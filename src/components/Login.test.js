@@ -113,7 +113,7 @@ describe("LoginPage", () => {
     ).toBeInTheDocument();
   });
   it("should render mockpage if username and password are correct", async () => {
-    const { getByTestId, getByText } = render(<App />);
+    const { getByTestId, getByText, getByLabelText } = render(<App />);
     const username = getByTestId("username");
     const password = getByTestId("password");
     const signinButton = getByTestId("signin");
@@ -129,5 +129,10 @@ describe("LoginPage", () => {
 
     await waitForElement(() => getByText("Login as HR successfully"));
     expect(getByText("Login as HR successfully")).toBeInTheDocument();
+    const menu = getByLabelText("menu");
+    expect(menu).toBeInTheDocument();
+    fireEvent.click(menu);
+    const logoutButton = getByTestId("logoutButton");
+    fireEvent.click(logoutButton);
   });
 });
