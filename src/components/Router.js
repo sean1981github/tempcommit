@@ -4,13 +4,12 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import Login from "./LoginHandle";
 import MockPage from "./MockPage";
 
-function Router(props) {
+function Router() {
   const [isLoggedIn, setLoggedIn] = useState(false);
 
   return (
     <div>
       <Switch>
-        {/* <Route exact path="/" component={Login} /> */}
         <Route
           exact
           path="/login"
