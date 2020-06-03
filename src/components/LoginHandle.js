@@ -8,10 +8,20 @@ const STATUS_OK = 200;
 class LoginHandle extends React.Component {
   constructor(props) {
     super(props);
+    let message = "";
+    if (
+      props.location.state === undefined ||
+      props.location.state.message === undefined
+    ) {
+      message = "";
+    } else {
+      message = props.location.state.message;
+    }
+
     this.state = {
       username: "",
       password: "",
-      errorMessage: null,
+      errorMessage: message,
       isLoading: false,
     };
   }

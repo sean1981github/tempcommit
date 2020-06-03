@@ -134,5 +134,8 @@ describe("LoginPage", () => {
     fireEvent.click(menu);
     const logoutButton = getByTestId("logoutButton");
     fireEvent.click(logoutButton);
+    mockAxios.onPost("/users/logout").reply(200);
+    expect(getByText("You have logged out")).toBeInTheDocument();
+    expect(getByTestId("username")).toBeInTheDocument();
   });
 });

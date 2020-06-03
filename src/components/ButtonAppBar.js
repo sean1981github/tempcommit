@@ -6,6 +6,7 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
+import Axios from "../utils/axiosInstance";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ButtonAppBar = () => {
+const ButtonAppBar = (props) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -27,8 +28,9 @@ const ButtonAppBar = () => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
-    setAnchorEl(null);
+  const handleLogout = () => {
+    Axios.post("/users/logout");
+    props.history.push("/login", { message: "You have logged out" });
   };
 
   return (
@@ -51,9 +53,8 @@ const ButtonAppBar = () => {
             anchorEl={anchorEl}
             keepMounted
             open={Boolean(anchorEl)}
-            onClose={handleClose}
           >
-            <MenuItem data-testid="logoutButton" onClick={handleClose}>
+            <MenuItem data-testid="logoutButton" onClick={handleLogout}>
               Logout
             </MenuItem>
           </Menu>
