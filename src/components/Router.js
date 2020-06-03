@@ -1,16 +1,33 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { useState } from "react";
+import { Route, Switch, Redirect } from "react-router-dom";
 import Login from "./LoginHandle";
 import MockPage from "./MockPage";
 
-const myRouter = () => (
-  <div>
-    <Switch>
-      <Route exact path="/" component={Login} />
-      <Route exact path="/login" component={Login} />
-      <Route exact path="/mock-page" component={MockPage} />
-    </Switch>
-  </div>
-);
+function Router(props) {
+  const [isLoggedIn, setLoggedIn] = useState(false);
 
-export default myRouter;
+  return (
+    <div>
+      <Switch>
+        {/* <Route exact path="/" component={Login} /> */}
+        <Route
+          exact
+          path="/login"
+          render={(props) => <Login setLoggedIn={setLoggedIn} {...props} />}
+        />
+        {isLoggedIn && (
+          <Route
+            path="/mock-page"
+            render={(props) => (
+              <MockPage setLoggedIn={setLoggedIn} {...props} />
+            )}
+          />
+        )}
+        <Redirect to="/login" />
+      </Switch>
+    </div>
+  );
+}
+
+export default Router;

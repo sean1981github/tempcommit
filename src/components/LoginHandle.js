@@ -73,7 +73,10 @@ class LoginHandle extends React.Component {
               isLoading: false,
             });
 
-            this.props.history.push("/mock-page", { role: res.data });
+            this.props.setLoggedIn(true);
+            this.props.history.push("/mock-page", {
+              role: res.data,
+            });
           } else {
             this.setState({
               isLoading: false,

@@ -4,8 +4,8 @@ import ButtonAppBar from "./ButtonAppBar";
 const mockHomePage = (props) => {
   return (
     <div>
-      <ButtonAppBar history={props.history} />
-      Login as {props.location.state.role} successfully{" "}
+      <ButtonAppBar history={props.history} setLoggedIn={props.setLoggedIn} />
+      Login as {props.location.state.role} successfully
     </div>
   );
 };

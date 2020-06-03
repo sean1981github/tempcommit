@@ -30,6 +30,7 @@ const ButtonAppBar = (props) => {
 
   const handleLogout = () => {
     Axios.post("/users/logout");
+    props.setLoggedIn(false);
     props.history.push("/login", { message: "You have logged out" });
   };
 
