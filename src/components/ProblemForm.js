@@ -1,190 +1,240 @@
-import {
-  Button,
-  Grid,
-  Container,
-  TextField,
-  Typography,
-  FormControl,
-  Select,
-  MenuItem,
-  FormHelperText,
-} from "@material-ui/core";
-import React, { useState, Fragment } from "react";
-import { v4 as uuid } from "uuid";
+import React, { Fragment, Component } from "react";
+import "./ProblemForm.css";
+import { ProblemAPI } from "../utils/axiosHelper";
+import ProblemFormUI from "./ProblemFormUI";
 import Option from "./option";
+import { v4 as uuid } from "uuid";
+const STATUS_OK = 200;
 
-const ProblemForm = (props) => {
-  return (
-    <Container className="problem-page-container" maxWidth={"md"}>
-      <Grid container spacing={6} direction="column">
-        <Grid
-          className="problem-title-container"
-          justify={"center"}
-          item
-          xs={12}
-          container
-        >
-          <Typography variant="h2">Add Problem</Typography>
-        </Grid>
+class ProblemForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      questionText: "",
+      newOptionText: "",
+      optionList: [],
+      answer: null,
+      problemSetCode: null,
+      isLoading: false,
+      errorMessages: {
+        questionText: "",
+        newOptionText: "",
+        optionList: "",
+        answer: "",
+        problemSetCode: "",
+        api: "",
+      },
+    };
+  }
 
-        <Grid item xs={12} container className="problem-grid-row-container">
-          <TextField
-            className="question-textfield"
-            label="Enter Question"
-            multiline
-            rows={4}
-            value={props.questionText}
-            onChange={props.handleQuestionTextInput}
-            variant="outlined"
-          />
-        </Grid>
+  handleQuestionTextInput = (event) => {
+    this.setState({
+      questionText: event.target.value,
+    });
+  };
 
-        <Grid item xs={12} container justify={"space-between"}>
-          <TextField
-            className="option-textfield"
-            label="Enter Answer Option"
-            multiline
-            rowsMax={4}
-            value={props.newOptionText}
-            onChange={props.handleOptionTextInput}
-            variant="outlined"
-          />
-          <Button
-            className="submit-button"
-            variant="contained"
-            color="primary"
-            disableElevation={true}
-            onClick={props.addOption}
-          >
-            Add Option
-          </Button>
-        </Grid>
+  handleOptionTextInput = (event) => {
+    this.setState({ newOptionText: event.target.value });
+  };
 
-        <Grid item xs={12} container direction={"column"} spacing={3}>
-          {props.optionList.map((currentItem, index) => {
-            return (
-              <Option
-                key={uuid()}
-                index={index + 1}
-                option={currentItem}
-                deleteItem={() => {
-                  const filteredItem = props.optionList.filter(
-                    (item) => currentItem.option !== item.option
-                  );
-                  props.updateOptions(...filteredItem);
-                }}
-              />
+  validateNewOption = () => {
+    this.setState({
+      errorMessages: {
+        newOptionText: "",
+      },
+    });
+    const questionText = this.state.newOptionText;
+    const invalidNewOptionText = !questionText || questionText.length < 5;
+
+    if (invalidNewOptionText) {
+      this.setState({
+        errorMessages: {
+          ...this.state.errorMessages,
+          newOptionText:
+            "Answer cannot empty and needs to be 5 characters or longer",
+        },
+      });
+      return false;
+    }
+    return true;
+  };
+
+  handleAddNewOption = () => {
+    if (this.validateNewOption() === false) {
+      return;
+    } else {
+      const newOption = {
+        option: this.state.newOptionText,
+      };
+
+      this.setState({
+        newOptionText: "",
+        optionList: [...this.state.optionList, newOption],
+        errorMessages: {
+          ...this.state.errorMessages,
+          newOptionText: "",
+        },
+      });
+    }
+  };
+
+  handleUpdateOptions = (newOptions) => {
+    this.setState({ optionList: newOptions });
+  };
+
+  showOptionList = () => {
+    const optionList = this.state.optionList;
+
+    return optionList.map((currentItem, index) => {
+      return (
+        <Option
+          key={uuid()}
+          index={index + 1}
+          option={currentItem}
+          deleteItem={() => {
+            const filteredItem = optionList.filter(
+              (item) => currentItem.option !== item.option
             );
-          })}
-        </Grid>
+            this.handleUpdateOptions([...filteredItem]);
+          }}
+        />
+      );
+    });
+  };
 
-        <Grid
-          item
-          xs={12}
-          container
-          direction={"row"}
-          justify={"flex-start"}
-          alignItems={"baseline"}
-        >
-          <Grid
-            item
-            xs={4}
-            container
-            direction={"row"}
-            justify={"flex-start"}
-            alignItems={"baseline"}
-          >
-            <Typography variant="h6">Choose Correct Answer:</Typography>
-          </Grid>
+  handleUpdateAnswer = (selectedOption) => {
+    this.setState({
+      answer: selectedOption.target.value,
+    });
+  };
 
-          <Grid
-            item
-            xs={8}
-            container
-            direction={"row"}
-            justify={"flex-start"}
-            alignItems={"baseline"}
-          >
-            <FormControl>
-              <Select value={props.answer} onChange={props.handleUpdateAnswer}>
-                <MenuItem value="">
-                  <em>None</em>
-                </MenuItem>
-                {props.optionList.map((option, index) => {
-                  return (
-                    <MenuItem value={index} key={uuid()}>
-                      Choice {index + 1}
-                    </MenuItem>
-                  );
-                })}
-              </Select>
-              <FormHelperText>
-                Populate options before choosing the correct answer
-              </FormHelperText>
-            </FormControl>
-          </Grid>
-        </Grid>
-        <Grid
-          item
-          xs={12}
-          container
-          justify={"flex-start"}
-          alignItems={"baseline"}
-        >
-          <Grid
-            item
-            xs={4}
-            container
-            justify={"flex-start"}
-            alignItems={"baseline"}
-          >
-            <Typography variant="h6">Choose Problem Set:</Typography>
-          </Grid>
-          <Grid
-            item
-            xs={8}
-            container
-            justify={"flex-start"}
-            alignItems={"baseline"}
-          >
-            <FormControl>
-              <Select value={props.problemSetCode}>
-                <MenuItem value={props.problemSetCode}>
-                  ProblemSetCodeA
-                </MenuItem>
-              </Select>
-              <FormHelperText>
-                Select the problem set this problem belongs to
-              </FormHelperText>
-            </FormControl>
-          </Grid>
-        </Grid>
+  handleUpdateProblemSetCode = (selectedOption) => {
+    this.setState({
+      problemSetCode: selectedOption.target.value,
+    });
+  };
 
-        <Grid item xs={12} container justify={"space-evenly"}>
-          <Button
-            size={"large"}
-            href="/problem/"
-            className="submit-button"
-            variant="contained"
-            color="primary"
-            disableElevation={true}
-          >
-            Back
-          </Button>
-          <Button
-            size={"large"}
-            className="submit-button"
-            variant="contained"
-            color="primary"
-            disableElevation={true}
-            onClick={props.submit}
-          >
-            Save
-          </Button>
-        </Grid>
-      </Grid>
-    </Container>
-  );
-};
+  validateForm = () => {
+    const questionText = this.state.questionText;
+    const optionList = this.state.optionList;
+    const answer = this.state.answer;
+    const problemSetCode = this.state.problemSetCode;
+    this.setState({
+      errorMessages: {
+        questionText: "",
+        newOptionText: "",
+        optionList: "",
+        answer: "",
+        problemSetCode: "",
+      },
+    });
+
+    const invalidQuestion = !questionText || questionText.length === 0;
+    const invalidOptions = optionList.length < 2;
+    const invalidAnswer = !answer || answer === null;
+    const invalidProblemSetCode = !problemSetCode || problemSetCode === null;
+
+    if (
+      invalidQuestion ||
+      invalidOptions ||
+      invalidAnswer ||
+      invalidProblemSetCode
+    ) {
+      this.setState({
+        errorMessages: {
+          ...this.state.errorMessages,
+          questionText: invalidQuestion ? "Question should not be empty" : "",
+          optionList: invalidOptions ? "Please add at least 2 answers" : "",
+          answer: invalidAnswer ? "Correct Answer cannot be empty" : "",
+          problemSetCode: invalidProblemSetCode
+            ? "Problem Set cannot be empty"
+            : "",
+        },
+      });
+      return false;
+    }
+
+    return true;
+  };
+
+  submit = () => {
+    if (this.validateForm() === false) {
+      return;
+    } else {
+      this.setState({ isLoading: true });
+      const payload = {
+        question: this.state.questionText,
+        options: this.state.optionList,
+        answer: this.state.answer,
+        problemSetCode: this.state.problemSetCode,
+      };
+
+      ProblemAPI.post("./add", payload, {
+        withCredentials: true,
+      })
+        .then((res) => {
+          if (res.status === STATUS_OK) {
+            this.setState({
+              isLoading: false,
+            });
+            this.props.history.push("/problem/confirmation", res.data);
+          } else {
+            this.setState({
+              isLoading: false,
+              errorMessages: {
+                ...this.state.errorMessages,
+                api: "Something is wrong, please try again later.",
+              },
+            });
+          }
+        })
+        .catch((error) => {
+          this.setState({
+            isLoading: false,
+            errorMessages: {
+              ...this.state.errorMessages,
+              api: error.response
+                ? `Failed to add problem - ${error.response.data} - ${error.response.status}`
+                : "Something is wrong, please try again later.",
+            },
+          });
+        });
+    }
+  };
+
+  showProblemFormUI = () => {
+    return (
+      <Fragment>
+        <ProblemFormUI
+          questionText={this.state.questionText}
+          handleQuestionTextInput={this.handleQuestionTextInput}
+          newOptionText={this.state.newOptionText}
+          handleOptionTextInput={this.handleOptionTextInput}
+          optionList={this.state.optionList}
+          handleAddNewOption={this.handleAddNewOption}
+          showOptionList={this.showOptionList}
+          answer={this.state.answer}
+          handleUpdateAnswer={this.handleUpdateAnswer}
+          problemSetCode={this.state.problemSetCode}
+          handleUpdateProblemSetCode={this.handleUpdateProblemSetCode}
+          submit={this.submit}
+          errorMessages={this.state.errorMessages}
+          isLoading={this.state.isLoading}
+        />
+        {this.state.errorMessages.api ? (
+          <div className="api-error-message" data-testid="api-error-message">
+            {this.state.errorMessages.api}
+          </div>
+        ) : (
+          <div></div>
+        )}
+      </Fragment>
+    );
+  };
+
+  render() {
+    return <div>{this.showProblemFormUI()}</div>;
+  }
+}
 
 export default ProblemForm;

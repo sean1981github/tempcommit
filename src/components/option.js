@@ -1,21 +1,23 @@
 import React from "react";
-import "./option.css";
-import { Button, Typography, Grid } from "@material-ui/core";
+import { Typography, Grid } from "@material-ui/core";
+import RemoveCircleIcon from "@material-ui/icons/RemoveCircle";
 
 const Option = ({ index, option, deleteItem }) => {
   return (
     <Grid item xs={12} container justify={"space-between"}>
-      <Typography variant="h6">{`${index}. ${option.option}`}</Typography>
-      <Button
-        size={"small"}
-        className="submit-button"
-        variant="contained"
-        color="primary"
-        disableElevation={true}
-        onClick={deleteItem}
-      >
-        Delete
-      </Button>
+      <Grid item xs={10} container>
+        <Typography
+          noWrap
+          variant="h6"
+        >{`${index}. ${option.option}`}</Typography>
+      </Grid>
+      <Grid item xs={1} container justify={"flex-end"}>
+        <RemoveCircleIcon
+          onClick={deleteItem}
+          color="error"
+          fontSize={"large"}
+        />
+      </Grid>
     </Grid>
   );
 };
