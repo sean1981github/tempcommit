@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import Loader from "./loader";
-import Login from "./loginPage";
+import Login from "./LoginPage";
 import Axios from "../utils/axiosInstance";
 import "./loginPage.css";
 const STATUS_OK = 200;

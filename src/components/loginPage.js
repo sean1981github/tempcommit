@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const loginPage = (props) => {
+const LoginPage = (props) => {
   const classes = useStyles();
   return (
     <div className="container">
@@ -67,4 +67,4 @@ const loginPage = (props) => {
   );
 };
 
-export default loginPage;
+export default LoginPage;
