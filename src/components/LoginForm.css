@@ -1,0 +1,23 @@
+.form-box {
+  border: 1px solid grey;
+  border-radius: 8px;
+  background: white;
+  margin: auto;
+  margin-bottom: 1.5%;
+  width: 25%;
+  padding: 2rem 1rem 2rem 1rem;
+  margin-top: 5%;
+}
+
+.container {
+  margin-top: 2rem;
+}
+
+.error {
+  color: red;
+  margin: 1rem;
+  padding: 1rem 1rem 1rem 1rem;
+  border: 1px solid white;
+  background-color: white;
+  opacity: 0.8;
+}

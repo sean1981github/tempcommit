@@ -6,3 +6,5 @@ build
 coverage/
 
 test-report.xml
+
+.env
