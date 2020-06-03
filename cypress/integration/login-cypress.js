@@ -1,6 +1,6 @@
-describe("Hello Cypress", () => {
+describe("login", () => {
   it("visit the CASE site", () => {
-    cy.visit("http://localhost:3000");
+    cy.visit("http://localhost:3000/login");
   });
 
   it("should render WELCOME TO CASE text", () => {
