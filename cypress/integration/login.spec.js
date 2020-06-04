@@ -15,6 +15,7 @@ describe("Login Cypress", () => {
     loginHelper.enterUsername(Cypress.env("HR_ID"));
     loginHelper.enterPassword(Cypress.env("HR_PASS"));
     loginHelper.clickSignIn();
+    cy.get('[aria-label="audio-loading"]');
     cy.get("#simple-tab-1").should("have.attr", "aria-selected", "true");
   });
 
@@ -26,6 +27,7 @@ describe("Login Cypress", () => {
     loginHelper.enterUsername(Cypress.env("QM_ID"));
     loginHelper.enterPassword(Cypress.env("QM_PASS"));
     loginHelper.clickSignIn();
+    cy.get('[aria-label="audio-loading"]');
     cy.get("#simple-tab-0").should("have.attr", "aria-selected", "true");
   });
 
@@ -37,6 +39,7 @@ describe("Login Cypress", () => {
     loginHelper.enterUsername(Cypress.env("AS_ID"));
     loginHelper.enterPassword(Cypress.env("AS_PASS"));
     loginHelper.clickSignIn();
+    cy.get('[aria-label="audio-loading"]');
     cy.get("#simple-tab-2").should("have.attr", "aria-selected", "true");
   });
 
