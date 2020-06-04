@@ -17,3 +17,7 @@ phases:
       - npm run sonar:scan
       - echo "Sonar Gateway"
       - npm run sonar:gateway
+      - echo "Install Heroku"
+      - npm i -g heroku
+      - echo "Push to Heroku"
+      - git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
