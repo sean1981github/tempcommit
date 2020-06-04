@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { Typography } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
-
 import ProblemConfirmationUI from "./ProblemConfirmationUI";
 
 class ProblemConfirmation extends Component {

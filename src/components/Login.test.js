@@ -19,6 +19,7 @@ describe("LoginPage", () => {
     expect(getByTestId("password")).toBeInTheDocument();
     expect(getByTestId("signin")).toBeInTheDocument();
   });
+
   it("should prompt error if both username and password are empty", () => {
     const { getByTestId, getByText } = render(<App />);
     const signinButton = getByTestId("signin");
@@ -27,6 +28,7 @@ describe("LoginPage", () => {
       getByText("Username and password should not be empty")
     ).toBeInTheDocument();
   });
+
   it("should prompt error if username is empty", () => {
     const { getByTestId, getByText } = render(<App />);
     const password = getByTestId("password");
@@ -37,6 +39,7 @@ describe("LoginPage", () => {
     fireEvent.click(signinButton);
     expect(getByText("Username should not be empty")).toBeInTheDocument();
   });
+
   it("should prompt error if password is empty", () => {
     const { getByTestId, getByText } = render(<App />);
     const username = getByTestId("username");
@@ -47,6 +50,7 @@ describe("LoginPage", () => {
     fireEvent.click(signinButton);
     expect(getByText("Password should not be empty")).toBeInTheDocument();
   });
+
   it("should prompt error if timeout", async () => {
     const { getByTestId, getByText } = render(<App />);
     const username = getByTestId("username");
@@ -68,6 +72,7 @@ describe("LoginPage", () => {
       getByText("Something is wrong.Please try again.")
     ).toBeInTheDocument();
   });
+
   it("should prompt error if username/password is wrong", async () => {
     const { getByTestId, getByText } = render(<App />);
     const username = getByTestId("username");

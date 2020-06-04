@@ -1,10 +1,12 @@
 import React, { Fragment, Component } from "react";
 import "./ProblemForm.css";
-import { ProblemAPI } from "../utils/axiosHelper";
+import Axios from "../utils/axiosInstance";
 import ProblemFormUI from "./ProblemFormUI";
 import Option from "./option";
 import { v4 as uuid } from "uuid";
 const STATUS_OK = 200;
+const MIN_INPUT_LENGTH = 5;
+const MIN_OPTIONS_COUNT = 2;
 
 class ProblemForm extends Component {
   constructor(props) {
@@ -14,6 +16,7 @@ class ProblemForm extends Component {
       newOptionText: "",
       optionList: [],
       answer: null,
+      problemSet: [],
       problemSetCode: null,
       isLoading: false,
       errorMessages: {
@@ -44,7 +47,8 @@ class ProblemForm extends Component {
       },
     });
     const questionText = this.state.newOptionText;
-    const invalidNewOptionText = !questionText || questionText.length < 5;
+    const invalidNewOptionText =
+      !questionText || questionText.length < MIN_INPUT_LENGTH;
 
     if (invalidNewOptionText) {
       this.setState({
@@ -96,6 +100,7 @@ class ProblemForm extends Component {
               (item) => currentItem.option !== item.option
             );
             this.handleUpdateOptions([...filteredItem]);
+            this.setState({ answer: null });
           }}
         />
       );
@@ -129,8 +134,9 @@ class ProblemForm extends Component {
       },
     });
 
-    const invalidQuestion = !questionText || questionText.length === 0;
-    const invalidOptions = optionList.length < 2;
+    const invalidQuestion =
+      !questionText || questionText.length < MIN_INPUT_LENGTH;
+    const invalidOptions = optionList.length < MIN_OPTIONS_COUNT;
     const invalidAnswer = !answer || answer === null;
     const invalidProblemSetCode = !problemSetCode || problemSetCode === null;
 
@@ -143,7 +149,9 @@ class ProblemForm extends Component {
       this.setState({
         errorMessages: {
           ...this.state.errorMessages,
-          questionText: invalidQuestion ? "Question should not be empty" : "",
+          questionText: invalidQuestion
+            ? "Question cannot empty and needs to be 5 characters or longer"
+            : "",
           optionList: invalidOptions ? "Please add at least 2 answers" : "",
           answer: invalidAnswer ? "Correct Answer cannot be empty" : "",
           problemSetCode: invalidProblemSetCode
@@ -169,11 +177,9 @@ class ProblemForm extends Component {
         problemSetCode: this.state.problemSetCode,
       };
 
-      ProblemAPI.post("./add", payload, {
-        withCredentials: true,
-      })
+      Axios.post("problem/add", payload)
         .then((res) => {
-          if (res.status === STATUS_OK) {
+          if (res.status === STATUS_OK && res.data) {
             this.setState({
               isLoading: false,
             });
@@ -183,7 +189,8 @@ class ProblemForm extends Component {
               isLoading: false,
               errorMessages: {
                 ...this.state.errorMessages,
-                api: "Something is wrong, please try again later.",
+                api:
+                  "Failed to add problem. Something is wrong, please try again later.",
               },
             });
           }
@@ -193,9 +200,8 @@ class ProblemForm extends Component {
             isLoading: false,
             errorMessages: {
               ...this.state.errorMessages,
-              api: error.response
-                ? `Failed to add problem - ${error.response.data} - ${error.response.status}`
-                : "Something is wrong, please try again later.",
+              api:
+                "Failed to add problem. Something is wrong, please try again later.",
             },
           });
         });
@@ -215,6 +221,7 @@ class ProblemForm extends Component {
           showOptionList={this.showOptionList}
           answer={this.state.answer}
           handleUpdateAnswer={this.handleUpdateAnswer}
+          problemSet={this.state.problemSet}
           problemSetCode={this.state.problemSetCode}
           handleUpdateProblemSetCode={this.handleUpdateProblemSetCode}
           submit={this.submit}

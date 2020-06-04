@@ -13,6 +13,7 @@ const Option = ({ index, option, deleteItem }) => {
       </Grid>
       <Grid item xs={1} container justify={"flex-end"}>
         <RemoveCircleIcon
+          data-testid={`delete-option-icon-${index}`}
           onClick={deleteItem}
           color="error"
           fontSize={"large"}

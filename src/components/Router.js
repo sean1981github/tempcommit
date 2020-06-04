@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import Login from "./LoginHandle";
 import HomePage from "./HomePage";
+import MockPage from "./MockPage";
+import ProblemForm from "./ProblemForm";
+import ProblemConfirmation from "./ProblemConfirmation";
 
 function Router() {
   const [isLoggedIn, setLoggedIn] = useState(false);
@@ -32,6 +35,13 @@ function Router() {
             state: { message: "You are not authorised" },
           }}
         />
+        <Route exact path="/problem/add" component={ProblemForm} />
+        <Route
+          exact
+          path="/problem/confirmation"
+          component={ProblemConfirmation}
+        />
+        <Redirect to="/login" />
       </Switch>
     </div>
   );

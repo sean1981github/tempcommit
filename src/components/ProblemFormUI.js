@@ -10,17 +10,37 @@ import {
   MenuItem,
   FormHelperText,
 } from "@material-ui/core";
+const PARENT_PAGE_LINK = "/login";
 
 const ProblemFormUI = (props) => {
   const renderAnswerOptionList = () => {
-    return props.optionList.map((option, index) => {
-      const indexToDisplay = index + 1;
-      return (
-        <MenuItem value={indexToDisplay} key={indexToDisplay}>
-          Option&nbsp;{indexToDisplay}
+    return (
+      <TextField
+        select
+        helperText={props.errorMessages.answer || "Select the correct answer"}
+        error={!!props.errorMessages.answer}
+        required
+        value={props.answer}
+        onChange={props.handleUpdateAnswer}
+        SelectProps={{
+          SelectDisplayProps: {
+            "data-testid": "options-select",
+          },
+        }}
+      >
+        <MenuItem>
+          <em>None</em>
         </MenuItem>
-      );
-    });
+        {props.optionList.map((option, index) => {
+          const indexToDisplay = index + 1;
+          return (
+            <MenuItem value={indexToDisplay} key={indexToDisplay}>
+              Option&nbsp;{indexToDisplay}
+            </MenuItem>
+          );
+        })}
+      </TextField>
+    );
   };
 
   return (
@@ -32,6 +52,7 @@ const ProblemFormUI = (props) => {
 
         <Grid item xs={12} container>
           <TextField
+            inputProps={{ "data-testid": "question-textfield" }}
             error={!!props.errorMessages.questionText}
             className="question-textfield"
             label="Enter Question"
@@ -52,6 +73,7 @@ const ProblemFormUI = (props) => {
           alignItems={"baseline"}
         >
           <TextField
+            inputProps={{ "data-testid": "option-textfield" }}
             error={!!props.errorMessages.newOptionText}
             className="option-textfield"
             label="Enter Answer Option"
@@ -64,6 +86,7 @@ const ProblemFormUI = (props) => {
           />
 
           <Button
+            data-testid="add-option-button"
             size={"large"}
             className="submit-button"
             variant="contained"
@@ -109,17 +132,7 @@ const ProblemFormUI = (props) => {
             justify={"flex-start"}
             alignItems={"baseline"}
           >
-            <FormControl error={!!props.errorMessages.answer}>
-              <Select value={props.answer} onChange={props.handleUpdateAnswer}>
-                <MenuItem>
-                  <em>None</em>
-                </MenuItem>
-                {renderAnswerOptionList()}
-              </Select>
-              <FormHelperText>
-                {props.errorMessages.answer || "Select the correct answer"}
-              </FormHelperText>
-            </FormControl>
+            {renderAnswerOptionList()}
           </Grid>
         </Grid>
         <Grid
@@ -145,27 +158,34 @@ const ProblemFormUI = (props) => {
             justify={"flex-start"}
             alignItems={"baseline"}
           >
-            <FormControl error={!!props.errorMessages.problemSetCode}>
-              <Select
-                value={props.problemSetCode}
-                onChange={props.handleUpdateProblemSetCode}
-              >
-                <MenuItem>
-                  <em>None</em>
-                </MenuItem>
-                <MenuItem value="ProblemSetCodeA">Problem Set A</MenuItem>
-              </Select>
-              <FormHelperText>
-                {props.errorMessages.problemSetCod || "Select the problem set"}
-              </FormHelperText>
-            </FormControl>
+            <TextField
+              select
+              helperText={
+                props.errorMessages.problemSetCode || "Select the problem set"
+              }
+              error={!!props.errorMessages.problemSetCode}
+              required
+              value={props.problemSetCode}
+              onChange={props.handleUpdateProblemSetCode}
+              SelectProps={{
+                SelectDisplayProps: {
+                  "data-testid": "problemSetCode-select",
+                },
+              }}
+            >
+              <MenuItem>
+                <em>None</em>
+              </MenuItem>
+              <MenuItem value="ProblemSetCodeA">Problem Set A</MenuItem>
+            </TextField>
           </Grid>
         </Grid>
 
         <Grid item xs={12} container justify={"space-evenly"}>
           <Button
+            data-testid="back-button"
             size={"large"}
-            href="/problem/"
+            href={PARENT_PAGE_LINK}
             className="submit-button"
             variant="contained"
             color="primary"
@@ -174,6 +194,7 @@ const ProblemFormUI = (props) => {
             Back
           </Button>
           <Button
+            data-testid="submit-button"
             disabled={props.isLoading}
             size={"large"}
             className="submit-button"
@@ -182,7 +203,7 @@ const ProblemFormUI = (props) => {
             disableElevation={true}
             onClick={props.submit}
           >
-            {props.isLoading ? "Loading..." : "Save"}
+            {props.isLoading ? "Loading..." : "Submit"}
           </Button>
         </Grid>
       </Grid>

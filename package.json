@@ -14,7 +14,6 @@
     "react-loader-spinner": "^3.1.14",
     "dotenv": "^8.2.0",
     "react-dom": "^16.13.1",
-    "react-loader-spinner": "^3.1.14",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "uuid": "^8.1.0"
@@ -27,6 +26,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "test:dev": "react-scripts test --watchAll",
+    "test:silent": "react-scripts test --watchAll --silent",
     "testc": "react-scripts test --coverage --watchAll=false --testResultsProcessor ./node_modules/jest-sonar-reporter",
     "eject": "react-scripts eject",
     "cy:open": "cypress open",

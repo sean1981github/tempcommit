@@ -1,8 +1,10 @@
 import React from "react";
 import { Button, Grid, Container, Typography } from "@material-ui/core";
 import FaceIcon from "@material-ui/icons/Face";
+const PARENT_PAGE_LINK = "/login";
 
 const ProblemConfirmationUI = (props) => {
+  console.log("problem confirm UI was called");
   return (
     <div>
       <Container maxWidth={"md"}>
@@ -69,12 +71,13 @@ const ProblemConfirmationUI = (props) => {
 
           <Grid justify={"center"} item xs={12} container>
             <Button
+              data-testid="back-button"
               size={"large"}
               className="submit-button"
               variant="contained"
               color="primary"
               disableElevation={true}
-              href="/problem/"
+              href={PARENT_PAGE_LINK}
             >
               Back To Home
             </Button>
