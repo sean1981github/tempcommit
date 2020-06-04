@@ -10,7 +10,7 @@ phases:
   pre_build:
     commands:
       - echo "Check Lint"
-      - npm lint
+      - npm run lint
       - echo "Run Test Coverage"
       - npm run testc
       - echo "Sonar Scanner"
