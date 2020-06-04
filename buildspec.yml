@@ -13,7 +13,6 @@ phases:
       - npm --version
       - node --version
       - git --version
-      - git status
       - ls
       - echo "Check Lint"
       - npm run lint
@@ -30,5 +29,6 @@ phases:
       - git init
       - git add .
       - git commit -m "Push to heroku"
+      - git status
       - echo "Push to Heroku"
       - git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
