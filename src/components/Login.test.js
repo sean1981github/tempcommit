@@ -62,10 +62,10 @@ describe("LoginPage", () => {
     fireEvent.click(signinButton);
     mockAxios.onPost("/users/login").timeout();
     await waitForElement(() =>
-      getByText("Something is wrong.Please try again")
+      getByText("Something is wrong.Please try again.")
     );
     expect(
-      getByText("Something is wrong.Please try again")
+      getByText("Something is wrong.Please try again.")
     ).toBeInTheDocument();
   });
   it("should prompt error if username/password is wrong", async () => {
@@ -112,7 +112,7 @@ describe("LoginPage", () => {
       getByText("Something is wrong.Please try again")
     ).toBeInTheDocument();
   });
-  it("should render mockpage if username and password are correct", async () => {
+  it("should render mockpage if username and password are correct and logout successfully", async () => {
     const { getByTestId, getByText, getByLabelText } = render(<App />);
     const username = getByTestId("username");
     const password = getByTestId("password");
@@ -125,10 +125,11 @@ describe("LoginPage", () => {
       target: { value: "password" },
     });
     fireEvent.click(signinButton);
-    mockAxios.onPost("/users/login").reply(200, "HR");
-
-    await waitForElement(() => getByText("Login as HR successfully"));
-    expect(getByText("Login as HR successfully")).toBeInTheDocument();
+    mockAxios
+      .onPost("/users/login")
+      .reply(200, { role: "HR", username: "username" });
+    await waitForElement(() => getByText("username"));
+    expect(getByText("username")).toBeInTheDocument();
     const menu = getByLabelText("menu");
     expect(menu).toBeInTheDocument();
     fireEvent.click(menu);

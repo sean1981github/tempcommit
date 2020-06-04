@@ -1,0 +1,15 @@
+.tab-panel-items {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 5ch;
+  padding: 5ch;
+}
+
+.button-group {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 2ch;
+  margin-right: 2ch;
+}

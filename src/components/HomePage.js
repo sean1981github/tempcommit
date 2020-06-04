@@ -1,12 +1,13 @@
 import React from "react";
 import ButtonAppBar from "./ButtonAppBar";
+import TabPanel from "./TabPanel";
 
-const mockHomePage = (props) => {
+const HomePage = (props) => {
   return (
     <div>
       <ButtonAppBar history={props.history} setLoggedIn={props.setLoggedIn} />
-      Login as {props.location.state.role} successfully
+      <TabPanel history={props.history} />
     </div>
   );
 };
-export default mockHomePage;
+export default HomePage;

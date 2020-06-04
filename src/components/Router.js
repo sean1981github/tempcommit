@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import Login from "./LoginHandle";
-import MockPage from "./MockPage";
+import HomePage from "./HomePage";
 
 function Router() {
   const [isLoggedIn, setLoggedIn] = useState(false);
@@ -20,9 +20,10 @@ function Router() {
         />
         {isLoggedIn && (
           <Route
+            exact
             path="/mock-page"
             render={(props) => (
-              <MockPage setLoggedIn={setLoggedIn} {...props} />
+              <HomePage setLoggedIn={setLoggedIn} {...props} />
             )}
           />
         )}

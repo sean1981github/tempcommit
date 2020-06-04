@@ -76,7 +76,8 @@ class LoginHandle extends React.Component {
 
             this.props.setLoggedIn(true);
             this.props.history.push("/mock-page", {
-              role: res.data,
+              role: res.data.role,
+              username: res.data.username,
             });
           } else {
             this.setState({
@@ -91,7 +92,7 @@ class LoginHandle extends React.Component {
           });
           let message = "";
           if (!error.response) {
-            message = "Something is wrong.Please try again";
+            message = "Something is wrong.Please try again.";
           } else {
             message = "Login failed. Username and/or password is incorrect";
           }

@@ -2,6 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import Menu from "@material-ui/core/Menu";
@@ -28,6 +29,9 @@ const ButtonAppBar = (props) => {
     setAnchorEl(event.currentTarget);
   };
 
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   const handleLogout = () => {
     Axios.post("/users/logout");
     props.setLoggedIn(false);
@@ -49,11 +53,13 @@ const ButtonAppBar = (props) => {
           >
             <MenuIcon />
           </IconButton>
+          <Typography>{props.history.location.state.username}</Typography>
           <Menu
             id="simple-menu"
             anchorEl={anchorEl}
             keepMounted
             open={Boolean(anchorEl)}
+            onClose={handleClose}
           >
             <MenuItem data-testid="logoutButton" onClick={handleLogout}>
               Logout
