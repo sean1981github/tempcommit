@@ -9,6 +9,7 @@ class LoginHandle extends React.Component {
   constructor(props) {
     super(props);
     let message = "";
+
     if (
       props.location.state === undefined ||
       props.location.state.message === undefined

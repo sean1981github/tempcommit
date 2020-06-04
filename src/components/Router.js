@@ -10,6 +10,9 @@ function Router() {
   return (
     <div>
       <Switch>
+        <Route exact path="/">
+          <Redirect to="/login" />
+        </Route>
         <Route
           exact
           path="/login"
@@ -23,7 +26,12 @@ function Router() {
             )}
           />
         )}
-        <Redirect to="/login" />
+        <Redirect
+          to={{
+            pathname: "/login",
+            state: { message: "You are not authorised" },
+          }}
+        />
       </Switch>
     </div>
   );
