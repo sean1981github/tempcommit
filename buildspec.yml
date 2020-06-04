@@ -13,7 +13,6 @@ phases:
       - npm --version
       - node --version
       - git --version
-      - ls
       - echo "Check Lint"
       - npm run lint
       - echo "Run Test Coverage"
@@ -27,6 +26,8 @@ phases:
       - heroku --version
       - echo "Init git"
       - git init
+      - git config --global user.email "case.selfevaluation@gmail.com"
+      - git config --global user.name "case.selfevaluation"
       - git add .
       - git commit -m "Push to heroku"
       - git status
