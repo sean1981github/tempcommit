@@ -21,7 +21,7 @@ const useStyles = makeStyles({
   },
 });
 
-const MenuCard = () => {
+const QuizResultsCard = () => {
   const classes = useStyles();
 
   return (
@@ -46,4 +46,4 @@ const MenuCard = () => {
   );
 };
 
-export default MenuCard;
+export default QuizResultsCard;

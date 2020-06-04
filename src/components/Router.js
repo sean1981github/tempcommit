@@ -1,5 +1,4 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import Login from "./LoginHandle";
 import HomePage from "./HomePage";

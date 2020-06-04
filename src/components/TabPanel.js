@@ -18,6 +18,7 @@ import "./HomePage.css";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
+  const BOX_NUM = 3;
 
   return (
     <div
@@ -28,7 +29,7 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box p={3}>
+        <Box p={BOX_NUM}>
           <Typography>{children}</Typography>
         </Box>
       )}
@@ -62,20 +63,24 @@ const SimpleTabs = (props) => {
   let disableQMFlag = true;
   let disableAssessorFlag = true;
   let disableAdminFlag = true;
-  let defaultTabIndex = 0;
+  const TAB_INDEX_ZERO = 0;
+  const TAB_INDEX_ONE = 1;
+  const TAB_INDEX_TWO = 2;
+  const TAB_INDEX_THREE = 3;
 
-  if (role === "HR") {
-    disableHRFlag = false;
-    defaultTabIndex = 1;
-  } else if (role === "QM") {
+  let defaultTabIndex = TAB_INDEX_ZERO;
+
+  if (role === "QM") {
     disableQMFlag = false;
-    defaultTabIndex = 0;
+  } else if (role === "HR") {
+    disableHRFlag = false;
+    defaultTabIndex = TAB_INDEX_ONE;
   } else if (role === "ASSESSOR") {
-    disableAssessorFlag = true;
-    defaultTabIndex = 2;
-  } else if (role === "ADMIN") {
-    disableAdminFlag = true;
-    defaultTabIndex = 3;
+    disableAssessorFlag = false;
+    defaultTabIndex = TAB_INDEX_TWO;
+  } else {
+    disableAdminFlag = false;
+    defaultTabIndex = TAB_INDEX_THREE;
   }
 
   const classes = useStyles();

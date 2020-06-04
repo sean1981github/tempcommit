@@ -11,11 +11,9 @@ class LoginHandle extends React.Component {
     let message = "";
 
     if (
-      props.location.state === undefined ||
-      props.location.state.message === undefined
+      props.location.state !== undefined &&
+      props.location.state.message !== undefined
     ) {
-      message = "";
-    } else {
       message = props.location.state.message;
     }
 
