@@ -1,0 +1,19 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 12
+    commands:
+      - echo "installing"
+      - npm install
+  pre_build:
+    commands:
+      - echo "Check Lint"
+      - npm lint
+      - echo "Run Test Coverage"
+      - npm run testc
+      - echo "Sonar Scanner"
+      - npm npm run sonar:scan
+      - echo "Sonar Gateway"
+      - npm run sonar:gateway
