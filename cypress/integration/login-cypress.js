@@ -19,9 +19,9 @@ describe("Login Cypress", () => {
     loginHelper.enterPassword("passwordhr");
   });
 
-  it("should after entering the hr username and password and upon click, display Login as HR successfully", () => {
+  it("should see HR tab after sign in", () => {
     loginHelper.clickSignIn();
-    cy.contains("Login as HR successfully");
+    cy.contains(".MuiTab-root", "HR");
   });
 
   it("it should should 'You have logged out' after clicking on the logout button", () => {
@@ -36,9 +36,9 @@ describe("Login Cypress", () => {
     loginHelper.enterPassword("passwordqm");
   });
 
-  it("should after entering the QM username and password and upon click, display Login as QM successfully", () => {
+  it("should see HR tab after sign in", () => {
     loginHelper.clickSignIn();
-    cy.contains("Login as QM successfully");
+    cy.contains(".MuiTab-root", "QUIZ MASTER");
   });
 
   it("it should should 'You have logged out' after clicking on the logout button", () => {
@@ -55,7 +55,7 @@ describe("Login Cypress", () => {
 
   it("should after entering the Assessor username and password and upon click, display Login as Assessor successfully", () => {
     loginHelper.clickSignIn();
-    cy.contains("Login as ASSESSOR successfully");
+    cy.contains(".MuiTab-root", "ASSESSOR");
   });
 
   it("it should should 'You have logged out' after clicking on the logout button", () => {

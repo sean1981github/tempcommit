@@ -8,3 +8,6 @@ coverage/
 test-report.xml
 
 .env
+
+cypress/screenshots
+cypress/videos
