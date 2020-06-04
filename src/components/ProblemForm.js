@@ -15,9 +15,9 @@ class ProblemForm extends Component {
       questionText: "",
       newOptionText: "",
       optionList: [],
-      answer: null,
+      answer: "",
       problemSets: [],
-      problemSetCode: null,
+      problemSetCode: "",
       isLoading: false,
       errorMessages: {
         questionText: "",
@@ -100,7 +100,7 @@ class ProblemForm extends Component {
               (item) => currentItem.option !== item.option
             );
             this.handleUpdateOptions([...filteredItem]);
-            this.setState({ answer: null });
+            this.setState({ answer: "" });
           }}
         />
       );
@@ -166,7 +166,6 @@ class ProblemForm extends Component {
   };
 
   submit = () => {
-    console.log(this.state);
     if (this.validateForm() === false) {
       return;
     } else {
@@ -244,14 +243,14 @@ class ProblemForm extends Component {
     Axios.get("problem-set")
       .then((res) => {
         if (res.status === STATUS_OK && res.data) {
-          console.log(res.data);
           this.setState({ problemSets: res.data });
         } else {
           this.setState({
             isLoading: false,
             errorMessages: {
               ...this.state.errorMessages,
-              api: "Failed to retrieve problem set.",
+              api:
+                "Failed to retrieve problem set. Please refresh page and try again.",
             },
           });
         }
@@ -261,7 +260,8 @@ class ProblemForm extends Component {
           isLoading: false,
           errorMessages: {
             ...this.state.errorMessages,
-            api: "Failed to retrieve problem set.",
+            api:
+              "Failed to retrieve problem set. Please refresh page and try again.",
           },
         });
       });

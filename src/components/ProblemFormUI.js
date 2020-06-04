@@ -5,15 +5,13 @@ import {
   Container,
   TextField,
   Typography,
-  FormControl,
-  Select,
   MenuItem,
   FormHelperText,
 } from "@material-ui/core";
 const PARENT_PAGE_LINK = "/login";
 
 const ProblemFormUI = (props) => {
-  const renderAnswerOptionList = () => {
+  const showAnswerOptionList = () => {
     return (
       <TextField
         select
@@ -28,9 +26,6 @@ const ProblemFormUI = (props) => {
           },
         }}
       >
-        <MenuItem>
-          <em>None</em>
-        </MenuItem>
         {props.optionList.map((option, index) => {
           const indexToDisplay = index + 1;
           return (
@@ -43,7 +38,7 @@ const ProblemFormUI = (props) => {
     );
   };
 
-  const renderProblemSetList = () => {
+  const showProblemSetList = () => {
     return (
       <TextField
         select
@@ -60,12 +55,12 @@ const ProblemFormUI = (props) => {
           },
         }}
       >
-        <MenuItem>
-          <em>None</em>
-        </MenuItem>
         {props.problemSets.map((problemSet) => {
           return (
-            <MenuItem value={problemSet.categoryCode} key={problemSet.id}>
+            <MenuItem
+              value={problemSet.categoryCode}
+              key={problemSet.categoryCode}
+            >
               {problemSet.categoryCode}
             </MenuItem>
           );
@@ -163,7 +158,7 @@ const ProblemFormUI = (props) => {
             justify={"flex-start"}
             alignItems={"baseline"}
           >
-            {renderAnswerOptionList()}
+            {showAnswerOptionList()}
           </Grid>
         </Grid>
         <Grid
@@ -189,7 +184,7 @@ const ProblemFormUI = (props) => {
             justify={"flex-start"}
             alignItems={"baseline"}
           >
-            {renderProblemSetList()}
+            {showProblemSetList()}
           </Grid>
         </Grid>
 

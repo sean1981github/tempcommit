@@ -1,7 +1,7 @@
 import React from "react";
 import MockAdapter from "axios-mock-adapter";
 import "@testing-library/jest-dom/extend-expect";
-import { render, fireEvent, waitForElement } from "@testing-library/react";
+import { render, fireEvent } from "@testing-library/react";
 import App from "../App";
 import ProblemForm from "../components/ProblemForm";
 import Axios from "../utils/axiosInstance";
@@ -10,33 +10,23 @@ const mockAxios = new MockAdapter(Axios);
 
 const mockProblemSet = [
   {
-    _id: "5ed8bdc889b6ab46b5da7420",
-    id: "af929e9a-6241-4410-b3c3-df13663b1e13",
     categoryCode: "Agile-Medium",
     score: 5,
     durationInMins: 5,
-    __v: 0,
   },
   {
-    _id: "5ed8bdd489b6ab46b5da7421",
-    id: "abe50c9d-0b49-409e-a804-f8e8a6ab303f",
     categoryCode: "Agile-Medium-Rare",
     score: 5,
     durationInMins: 5,
-    __v: 0,
   },
 ];
 
 describe("Problem Form Test", () => {
+  const waitForPromises = () => new Promise((resolve) => setTimeout(resolve));
+
   beforeEach(() => {
     mockAxios.reset();
   });
-
-  const renderProblemForm = () => {
-    const renderedForm = render(<ProblemForm />);
-    mockAxios.onGet("problem-set").reply(200, mockProblemSet);
-    return renderedForm;
-  };
 
   it("should redirect to create problem page from navlink", () => {
     const { getByText, getByTestId } = render(<App />);
@@ -183,13 +173,43 @@ describe("Problem Form Test", () => {
     expect(queryByText("Option 2")).not.toBeInTheDocument();
   });
 
-  it.only("should show newly added option when clicking on answer dropdown menu", async () => {
-    const renderedForm = await renderProblemForm();
-    const { getByTestId, queryByText, getByText } = renderedForm;
+  it("should show available problem sets retrieved by API when clicking on problem set dropdown menu", async () => {
+    const { getByTestId, getByText } = render(<ProblemForm />);
+
+    mockAxios.onGet("/problem-set").reply(200, mockProblemSet);
+    await waitForPromises();
+
     const problemSetCodeSelect = getByTestId("problemSetCode-select");
     fireEvent.mouseDown(problemSetCodeSelect);
+
     expect(getByText("Agile-Medium")).toBeInTheDocument();
-    // expect(queryByText("Option 2")).not.toBeInTheDocument();
+    expect(getByText("Agile-Medium-Rare")).toBeInTheDocument();
+  });
+
+  it("should show error message when API call to retrieve problem sets returns with non-200 status codes", async () => {
+    const { getByTestId, getByText } = render(<ProblemForm />);
+
+    mockAxios.onGet("/problem-set").reply(203);
+    await waitForPromises();
+
+    expect(
+      getByText(
+        /Failed to retrieve problem set. Please refresh page and try again./
+      )
+    ).toBeInTheDocument();
+  });
+
+  it("should show error message when API call to retrieve problem sets encounters network error", async () => {
+    const { getByTestId, getByText } = render(<ProblemForm />);
+
+    mockAxios.onGet("/problem-set").networkError();
+    await waitForPromises();
+
+    expect(
+      getByText(
+        /Failed to retrieve problem set. Please refresh page and try again./
+      )
+    ).toBeInTheDocument();
   });
 
   it("should not show deleted answer option in answer dropdown menu", () => {
@@ -229,20 +249,24 @@ describe("Problem Form Test", () => {
     ).not.toBeInTheDocument();
   });
 
-  it("should not display error message for missing problem set code when submit after choosing a problem set", () => {
+  it("should not display error message for missing problem set code when submit after choosing a problem set", async () => {
     const { getByTestId, queryByText, getByText } = render(<ProblemForm />);
-    const problemSetCodeSelect = getByTestId("problemSetCode-select");
 
+    mockAxios.onGet("/problem-set").reply(200, mockProblemSet);
+    await waitForPromises();
+
+    const problemSetCodeSelect = getByTestId("problemSetCode-select");
     fireEvent.mouseDown(problemSetCodeSelect);
-    const problemSetA = getByText("Problem Set A");
-    fireEvent.click(problemSetA);
+
+    const problemSetAgileMedium = getByText("Agile-Medium");
+    fireEvent.click(problemSetAgileMedium);
 
     const submitButton = getByTestId("submit-button");
     fireEvent.click(submitButton);
     expect(queryByText("Problem Set cannot be empty")).not.toBeInTheDocument();
   });
 
-  it("should display error message when submitting with less than 2 answer options ", () => {
+  it("should display error message when submitting with less than 2 answer options", () => {
     const { getByTestId, getByText } = render(<ProblemForm />);
     const optionTextField = getByTestId("option-textfield");
     const addOptionButton = getByTestId("add-option-button");
@@ -257,8 +281,8 @@ describe("Problem Form Test", () => {
     expect(getByText("Please add at least 2 answers")).toBeInTheDocument();
   });
 
-  it("should display not error message when submitting with less than 2 answer options ", () => {
-    const { getByTestId, getByText, queryByText } = render(<ProblemForm />);
+  it("should display not error message when submitting more than one answer option", () => {
+    const { getByTestId, queryByText } = render(<ProblemForm />);
     const optionTextField = getByTestId("option-textfield");
     const addOptionButton = getByTestId("add-option-button");
     fireEvent.change(optionTextField, {
@@ -288,6 +312,9 @@ describe("Problem Form Test", () => {
     const optionSelect = getByTestId("options-select");
     const problemSetCodeSelect = getByTestId("problemSetCode-select");
 
+    mockAxios.onGet("/problem-set").reply(200, mockProblemSet);
+    await waitForPromises();
+
     fireEvent.change(questionTextField, {
       target: { value: "Test Question" },
     });
@@ -307,21 +334,21 @@ describe("Problem Form Test", () => {
     fireEvent.click(option1);
 
     fireEvent.mouseDown(problemSetCodeSelect);
-    const problemSetA = getByText("Problem Set A");
-    fireEvent.click(problemSetA);
+    const problemSetAgileMedium = getByText("Agile-Medium");
+    fireEvent.click(problemSetAgileMedium);
 
     const submitButton = getByTestId("submit-button");
-    fireEvent.click(submitButton);
 
+    fireEvent.click(submitButton);
     mockAxios.onPost("problem/add").reply(203);
 
-    await waitForElement(() => getByText(/Failed to add problem./));
+    await waitForPromises();
     expect(getByText(/Failed to add problem./)).toBeInTheDocument();
 
     fireEvent.click(submitButton);
+    mockAxios.onPost("problem/add").networkError();
 
-    mockAxios.onPost("problem/add").reply(400);
-    await waitForElement(() => getByText(/Failed to add problem./));
+    await waitForPromises();
     expect(getByText(/Failed to add problem./)).toBeInTheDocument();
   });
 });

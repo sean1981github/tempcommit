@@ -4,7 +4,6 @@ import FaceIcon from "@material-ui/icons/Face";
 const PARENT_PAGE_LINK = "/login";
 
 const ProblemConfirmationUI = (props) => {
-  console.log("problem confirm UI was called");
   return (
     <div>
       <Container maxWidth={"md"}>

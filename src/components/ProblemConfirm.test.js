@@ -1,7 +1,7 @@
 import React from "react";
 import MockAdapter from "axios-mock-adapter";
 import "@testing-library/jest-dom/extend-expect";
-import { render, fireEvent, waitForElement } from "@testing-library/react";
+import { render, fireEvent } from "@testing-library/react";
 import App from "../App";
 import Axios from "../utils/axiosInstance";
 
@@ -20,11 +20,26 @@ const mockAxiosResponse = {
     },
   ],
   answer: "82792c1a-4ec4-4b38-9b8d-c853c8b602f5",
-  problemSetCode: "ProblemSetCodeA",
+  problemSetCode: "Agile-Medium",
   id: "71dbb9b1-a1a3-48ca-a79b-2920128cf158",
 };
 
-describe.only("Problem Form Test", () => {
+const mockProblemSet = [
+  {
+    categoryCode: "Agile-Medium",
+    score: 5,
+    durationInMins: 5,
+  },
+  {
+    categoryCode: "Agile-Medium-Rare",
+    score: 5,
+    durationInMins: 5,
+  },
+];
+
+describe("Problem Form Test", () => {
+  const waitForPromises = () => new Promise((resolve) => setTimeout(resolve));
+
   beforeEach(() => {
     mockAxios.reset();
   });
@@ -39,6 +54,9 @@ describe.only("Problem Form Test", () => {
     const addOptionButton = getByTestId("add-option-button");
     const optionSelect = getByTestId("options-select");
     const problemSetCodeSelect = getByTestId("problemSetCode-select");
+
+    mockAxios.onGet("/problem-set").reply(200, mockProblemSet);
+    await waitForPromises();
 
     fireEvent.change(questionTextField, {
       target: { value: "Test Question" },
@@ -59,21 +77,20 @@ describe.only("Problem Form Test", () => {
     fireEvent.click(option1);
 
     fireEvent.mouseDown(problemSetCodeSelect);
-    const problemSetA = getByText("Problem Set A");
-    fireEvent.click(problemSetA);
+    const problemSetAgileMedium = getByText("Agile-Medium");
+    fireEvent.click(problemSetAgileMedium);
 
     const submitButton = getByTestId("submit-button");
     fireEvent.click(submitButton);
 
     mockAxios.onPost("problem/add").reply(200, mockAxiosResponse);
-
-    await waitForElement(() => getByText("Your problem"));
+    await waitForPromises();
 
     expect(getByText("Test Question")).toBeInTheDocument();
     expect(getByText("1. First Option")).toBeInTheDocument();
     expect(getByText("2. Second Option")).toBeInTheDocument();
     expect(getByText("First Option")).toBeInTheDocument();
-    expect(getByText("ProblemSetCodeA")).toBeInTheDocument();
+    expect(getByText("Agile-Medium")).toBeInTheDocument();
     expect(getByTestId("back-button")).toBeInTheDocument();
   });
 });
