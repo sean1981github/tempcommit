@@ -16,7 +16,7 @@ class ProblemForm extends Component {
       newOptionText: "",
       optionList: [],
       answer: null,
-      problemSet: [],
+      problemSets: [],
       problemSetCode: null,
       isLoading: false,
       errorMessages: {
@@ -166,6 +166,7 @@ class ProblemForm extends Component {
   };
 
   submit = () => {
+    console.log(this.state);
     if (this.validateForm() === false) {
       return;
     } else {
@@ -221,7 +222,7 @@ class ProblemForm extends Component {
           showOptionList={this.showOptionList}
           answer={this.state.answer}
           handleUpdateAnswer={this.handleUpdateAnswer}
-          problemSet={this.state.problemSet}
+          problemSets={this.state.problemSets}
           problemSetCode={this.state.problemSetCode}
           handleUpdateProblemSetCode={this.handleUpdateProblemSetCode}
           submit={this.submit}
@@ -238,6 +239,33 @@ class ProblemForm extends Component {
       </Fragment>
     );
   };
+
+  componentDidMount() {
+    Axios.get("problem-set")
+      .then((res) => {
+        if (res.status === STATUS_OK && res.data) {
+          console.log(res.data);
+          this.setState({ problemSets: res.data });
+        } else {
+          this.setState({
+            isLoading: false,
+            errorMessages: {
+              ...this.state.errorMessages,
+              api: "Failed to retrieve problem set.",
+            },
+          });
+        }
+      })
+      .catch((error) => {
+        this.setState({
+          isLoading: false,
+          errorMessages: {
+            ...this.state.errorMessages,
+            api: "Failed to retrieve problem set.",
+          },
+        });
+      });
+  }
 
   render() {
     return <div>{this.showProblemFormUI()}</div>;

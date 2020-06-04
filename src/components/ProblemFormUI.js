@@ -43,6 +43,37 @@ const ProblemFormUI = (props) => {
     );
   };
 
+  const renderProblemSetList = () => {
+    return (
+      <TextField
+        select
+        helperText={
+          props.errorMessages.problemSetCode || "Select the problem set"
+        }
+        error={!!props.errorMessages.problemSetCode}
+        required
+        value={props.problemSetCode}
+        onChange={props.handleUpdateProblemSetCode}
+        SelectProps={{
+          SelectDisplayProps: {
+            "data-testid": "problemSetCode-select",
+          },
+        }}
+      >
+        <MenuItem>
+          <em>None</em>
+        </MenuItem>
+        {props.problemSets.map((problemSet) => {
+          return (
+            <MenuItem value={problemSet.categoryCode} key={problemSet.id}>
+              {problemSet.categoryCode}
+            </MenuItem>
+          );
+        })}
+      </TextField>
+    );
+  };
+
   return (
     <Container className="problem-page-container" maxWidth={"md"}>
       <Grid container spacing={6} direction="column">
@@ -158,26 +189,7 @@ const ProblemFormUI = (props) => {
             justify={"flex-start"}
             alignItems={"baseline"}
           >
-            <TextField
-              select
-              helperText={
-                props.errorMessages.problemSetCode || "Select the problem set"
-              }
-              error={!!props.errorMessages.problemSetCode}
-              required
-              value={props.problemSetCode}
-              onChange={props.handleUpdateProblemSetCode}
-              SelectProps={{
-                SelectDisplayProps: {
-                  "data-testid": "problemSetCode-select",
-                },
-              }}
-            >
-              <MenuItem>
-                <em>None</em>
-              </MenuItem>
-              <MenuItem value="ProblemSetCodeA">Problem Set A</MenuItem>
-            </TextField>
+            {renderProblemSetList()}
           </Grid>
         </Grid>
 

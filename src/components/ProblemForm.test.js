@@ -8,10 +8,35 @@ import Axios from "../utils/axiosInstance";
 
 const mockAxios = new MockAdapter(Axios);
 
+const mockProblemSet = [
+  {
+    _id: "5ed8bdc889b6ab46b5da7420",
+    id: "af929e9a-6241-4410-b3c3-df13663b1e13",
+    categoryCode: "Agile-Medium",
+    score: 5,
+    durationInMins: 5,
+    __v: 0,
+  },
+  {
+    _id: "5ed8bdd489b6ab46b5da7421",
+    id: "abe50c9d-0b49-409e-a804-f8e8a6ab303f",
+    categoryCode: "Agile-Medium-Rare",
+    score: 5,
+    durationInMins: 5,
+    __v: 0,
+  },
+];
+
 describe("Problem Form Test", () => {
   beforeEach(() => {
     mockAxios.reset();
   });
+
+  const renderProblemForm = () => {
+    const renderedForm = render(<ProblemForm />);
+    mockAxios.onGet("problem-set").reply(200, mockProblemSet);
+    return renderedForm;
+  };
 
   it("should redirect to create problem page from navlink", () => {
     const { getByText, getByTestId } = render(<App />);
@@ -156,6 +181,15 @@ describe("Problem Form Test", () => {
     fireEvent.mouseDown(optionSelect);
     expect(queryByText("Option 1")).toBeInTheDocument();
     expect(queryByText("Option 2")).not.toBeInTheDocument();
+  });
+
+  it.only("should show newly added option when clicking on answer dropdown menu", async () => {
+    const renderedForm = await renderProblemForm();
+    const { getByTestId, queryByText, getByText } = renderedForm;
+    const problemSetCodeSelect = getByTestId("problemSetCode-select");
+    fireEvent.mouseDown(problemSetCodeSelect);
+    expect(getByText("Agile-Medium")).toBeInTheDocument();
+    // expect(queryByText("Option 2")).not.toBeInTheDocument();
   });
 
   it("should not show deleted answer option in answer dropdown menu", () => {
