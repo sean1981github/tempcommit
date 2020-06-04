@@ -57,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SimpleTabs = (props) => {
+const TabPanels = (props) => {
   const role = props.history.location.state.role;
   let disableHRFlag = true;
   let disableQMFlag = true;
@@ -143,4 +143,4 @@ const SimpleTabs = (props) => {
   );
 };
 
-export default SimpleTabs;
+export default TabPanels;
