@@ -19,7 +19,7 @@ describe("Login Cypress", () => {
     cy.get("#simple-tab-1").should("have.attr", "aria-selected", "true");
   });
 
-  it("it should should 'You have logged out' after clicking on the logout button", () => {
+  it("it should display 'You have logged out' after clicking on the logout button", () => {
     loginHelper.clickLogOut();
   });
 
@@ -31,7 +31,7 @@ describe("Login Cypress", () => {
     cy.get("#simple-tab-0").should("have.attr", "aria-selected", "true");
   });
 
-  it("it should should 'You have logged out' after clicking on the logout button", () => {
+  it("it should display 'You have logged out' after clicking on the logout button", () => {
     loginHelper.clickLogOut();
   });
 
@@ -43,7 +43,17 @@ describe("Login Cypress", () => {
     cy.get("#simple-tab-2").should("have.attr", "aria-selected", "true");
   });
 
-  it("it should should 'You have logged out' after clicking on the logout button", () => {
+  it("it should display 'You have logged out' after clicking on the logout button", () => {
     loginHelper.clickLogOut();
+  });
+
+  it("it should display 'You are not authorised' when trying to access a protected route without login", () => {
+    loginHelper.enterUsername(Cypress.env("HR_ID"));
+    loginHelper.enterPassword(Cypress.env("HR_PASS"));
+    loginHelper.clickSignIn();
+    cy.get('[aria-label="audio-loading"]');
+    loginHelper.clickLogOut();
+    cy.visit("https://case-selfeval-frontend.herokuapp.com/mock-page");
+    cy.contains("You are not authorised");
   });
 });
