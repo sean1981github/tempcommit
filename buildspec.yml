@@ -14,6 +14,8 @@ phases:
       - node --version
       - git --version
       - echo "Check Lint"
+      - curl $REACT_APP_BACKEND_URL
+      - echo "Check Lint"
       - npm run lint
       - echo "Run Test Coverage"
       - npm run testc
