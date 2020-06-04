@@ -21,6 +21,10 @@ phases:
       - npm run sonar:scan
       - echo "Sonar Gateway"
       - npm run sonar:gateway
+      - echo "Cypress"
+      - npm run ci:cypress
+  post_build:
+    commands:
       - echo "Install Heroku"
       - npm i -g heroku
       - heroku --version

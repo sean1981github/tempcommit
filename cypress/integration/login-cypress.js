@@ -21,6 +21,7 @@ describe("Login Cypress", () => {
 
   it("should see HR tab after sign in", () => {
     loginHelper.clickSignIn();
+    cy.get('[aria-label="audio-loading"]');
     cy.contains(".MuiTab-root", "HR");
   });
 
@@ -38,6 +39,7 @@ describe("Login Cypress", () => {
 
   it("should see HR tab after sign in", () => {
     loginHelper.clickSignIn();
+    cy.get('[aria-label="audio-loading"]');
     cy.contains(".MuiTab-root", "QUIZ MASTER");
   });
 
@@ -55,6 +57,7 @@ describe("Login Cypress", () => {
 
   it("should after entering the Assessor username and password and upon click, display Login as Assessor successfully", () => {
     loginHelper.clickSignIn();
+    cy.get('[aria-label="audio-loading"]');
     cy.contains(".MuiTab-root", "ASSESSOR");
   });
 

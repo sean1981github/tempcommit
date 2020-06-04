@@ -64,8 +64,7 @@
     "jest-sonar-reporter": "^2.0.0",
     "pm2": "^4.4.0",
     "prettier": "^2.0.5",
-    "sonarqube-scanner": "^2.6.0",
-    "start-server-and-test": "^1.11.0"
+    "sonarqube-scanner": "^2.6.0"
   },
   "jest": {
     "coverageThreshold": {
