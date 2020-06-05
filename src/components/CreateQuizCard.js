@@ -6,18 +6,18 @@ import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import "./HomePage.css";
-import { grey } from "@material-ui/core/colors";
 
 const useStyles = makeStyles({
   root: {
-    width: "25%",
-    marginLeft: "3%",
-    marginRight: "3%",
-    color: grey,
+    width: "35ch",
+    height: "20ch",
+    // marginLeft: "5ch",
+    marginRight: "5ch",
   },
   button: {
     marginTop: 5,
     marginBottom: 5,
+    width: "30ch",
   },
 });
 
@@ -26,30 +26,31 @@ const CreateQuizCard = () => {
 
   return (
     <Card className={classes.root}>
-      <CardContent>
-        <Typography variant="h5" component="h2">
-          CREATE QUIZ
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <div className="button-group">
-          <Button
-            variant="contained"
-            className={classes.button}
-            color="primary"
-          >
-            Create New Quiz
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            className={classes.button}
-            href="#contained-buttons"
-          >
-            Delete Existing Quiz
-          </Button>
-        </div>
-      </CardActions>
+      <div className="card-hr">
+        <CardContent>
+          <Typography variant="h6" component="h3">
+            CREATE QUIZ
+          </Typography>
+        </CardContent>
+        <CardActions>
+          <div className="button-group-hr">
+            <Button
+              variant="contained"
+              className={classes.button}
+              color="primary"
+            >
+              Create New Quiz
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              className={classes.button}
+            >
+              Delete Existing Quiz
+            </Button>
+          </div>
+        </CardActions>
+      </div>
     </Card>
   );
 };

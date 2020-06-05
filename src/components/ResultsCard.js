@@ -9,13 +9,15 @@ import "./HomePage.css";
 
 const useStyles = makeStyles({
   root: {
-    width: "25%",
-    marginLeft: "3%",
-    marginRight: "3%",
+    width: "35ch",
+    height: "20ch",
+    marginLeft: "5ch",
+    marginRight: "5ch",
   },
   button: {
     marginTop: 5,
     marginBottom: 5,
+    width: "30ch",
   },
 });
 
@@ -24,22 +26,24 @@ const ResultsCard = () => {
 
   return (
     <Card className={classes.root}>
-      <CardContent>
-        <Typography variant="h5" component="h2">
-          RESULTS
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <div className="button-group">
-          <Button
-            variant="contained"
-            className={classes.button}
-            color="primary"
-          >
-            View Results
-          </Button>
-        </div>
-      </CardActions>
+      <div className="card-hr">
+        <CardContent>
+          <Typography variant="h6" component="h3">
+            RESULTS
+          </Typography>
+        </CardContent>
+        <CardActions>
+          <div className="button-group-hr">
+            <Button
+              variant="contained"
+              className={classes.button}
+              color="primary"
+            >
+              View Results
+            </Button>
+          </div>
+        </CardActions>
+      </div>
     </Card>
   );
 };

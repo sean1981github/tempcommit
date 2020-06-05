@@ -6,18 +6,20 @@ import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import "./HomePage.css";
-import { grey } from "@material-ui/core/colors";
 
 const useStyles = makeStyles({
   root: {
-    width: "25%",
-    marginLeft: "3%",
-    marginRight: "3%",
-    color: grey,
+    width: "35ch",
+    height: "25ch",
+    marginLeft: "5ch",
+    marginRight: "5ch",
+    textAlign: "center",
   },
   button: {
     marginTop: 5,
     marginBottom: 5,
+    width: "25ch",
+    height: "8ch",
   },
 });
 
@@ -26,30 +28,32 @@ const CategoryCard = () => {
 
   return (
     <Card className={classes.root}>
-      <CardContent>
-        <Typography variant="h5" component="h2">
-          CATEGORY
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <div className="button-group">
-          <Button
-            variant="contained"
-            className={classes.button}
-            color="primary"
-          >
-            Create New Category
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            className={classes.button}
-            href="#contained-buttons"
-          >
-            Edit Existing Category
-          </Button>
-        </div>
-      </CardActions>
+      <div className="card-qm">
+        <CardContent>
+          <Typography variant="h6" component="h3">
+            CATEGORY
+          </Typography>
+        </CardContent>
+        <CardActions>
+          <div className="button-group-qm">
+            <Button
+              variant="contained"
+              className={classes.button}
+              color="primary"
+            >
+              Create New Category
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              className={classes.button}
+              href="#contained-buttons"
+            >
+              Edit Existing Category
+            </Button>
+          </div>
+        </CardActions>
+      </div>
     </Card>
   );
 };

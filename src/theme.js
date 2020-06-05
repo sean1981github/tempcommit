@@ -1,6 +1,17 @@
 import { createMuiTheme } from "@material-ui/core/styles";
 import { orange } from "@material-ui/core/colors/";
 
+const overrides = {
+  MuiTab: {
+    root: {
+      backgroundColor: "#215e31",
+      "&$selected": {
+        backgroundColor: "#37c479",
+      },
+    },
+  },
+};
+
 export default createMuiTheme({
   palette: {
     primary: {
@@ -14,4 +25,6 @@ export default createMuiTheme({
   status: {
     danger: orange,
   },
+
+  overrides,
 });

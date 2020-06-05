@@ -125,7 +125,7 @@ const TabPanels = (props) => {
       </TabPanel>
       <TabPanel value={value} index={1}>
         <div className="tab-panel-items">
-          <CreateQuizCard />
+          <CreateQuizCard className="card" />
           <QuizResultsCard />
         </div>
       </TabPanel>
