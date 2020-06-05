@@ -27,7 +27,7 @@ class ProblemForm extends Component {
         problemSetCode: "",
         api: "",
       },
-      error: "",
+      apiError: "",
     };
   }
 
@@ -120,6 +120,22 @@ class ProblemForm extends Component {
     });
   };
 
+  validateQuestion = (questionText) => {
+    return questionText === "" || questionText.length < MIN_INPUT_LENGTH;
+  };
+
+  validateOptions = (optionList) => {
+    return optionList.length < MIN_OPTIONS_COUNT;
+  };
+
+  validateAnswer = (answer) => {
+    return answer === "";
+  };
+
+  validateProblemSetCode = (problemSetCode) => {
+    return problemSetCode === "";
+  };
+
   validateForm = () => {
     const questionText = this.state.questionText;
     const optionList = this.state.optionList;
@@ -135,11 +151,10 @@ class ProblemForm extends Component {
       },
     });
 
-    const invalidQuestion =
-      !questionText || questionText.length < MIN_INPUT_LENGTH;
-    const invalidOptions = optionList.length < MIN_OPTIONS_COUNT;
-    const invalidAnswer = !answer || answer === null;
-    const invalidProblemSetCode = !problemSetCode || problemSetCode === null;
+    const invalidQuestion = this.validateQuestion(questionText);
+    const invalidOptions = this.validateOptions(optionList);
+    const invalidAnswer = this.validateAnswer(answer);
+    const invalidProblemSetCode = this.validateProblemSetCode(problemSetCode);
 
     if (
       invalidQuestion ||
@@ -199,7 +214,7 @@ class ProblemForm extends Component {
         .catch((error) => {
           this.setState({
             isLoading: false,
-            error: error,
+            apiError: error,
             errorMessages: {
               ...this.state.errorMessages,
               api:
@@ -260,7 +275,7 @@ class ProblemForm extends Component {
       .catch((error) => {
         this.setState({
           isLoading: false,
-          error: error,
+          apiError: error,
           errorMessages: {
             ...this.state.errorMessages,
             api:
