@@ -8,7 +8,6 @@ import {
   MenuItem,
   FormHelperText,
 } from "@material-ui/core";
-const PARENT_PAGE_LINK = "/login";
 
 const ProblemFormUI = (props) => {
   const showAnswerOptionList = () => {
@@ -192,11 +191,11 @@ const ProblemFormUI = (props) => {
           <Button
             data-testid="back-button"
             size={"large"}
-            href={PARENT_PAGE_LINK}
             className="submit-button"
             variant="contained"
             color="primary"
             disableElevation={true}
+            onClick={props.backToPrevPage}
           >
             Back
           </Button>

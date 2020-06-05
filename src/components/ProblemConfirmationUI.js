@@ -1,7 +1,6 @@
 import React from "react";
 import { Button, Grid, Container, Typography } from "@material-ui/core";
 import FaceIcon from "@material-ui/icons/Face";
-const PARENT_PAGE_LINK = "/login";
 
 const ProblemConfirmationUI = (props) => {
   return (
@@ -76,7 +75,7 @@ const ProblemConfirmationUI = (props) => {
               variant="contained"
               color="primary"
               disableElevation={true}
-              href={PARENT_PAGE_LINK}
+              onClick={props.redirectHomePage}
             >
               Back To Home
             </Button>

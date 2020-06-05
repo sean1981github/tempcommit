@@ -28,12 +28,24 @@ function Router() {
             )}
           />
         )}
-        <Route exact path="/problem/add" component={ProblemForm} />
-        <Route
-          exact
-          path="/problem/confirmation"
-          component={ProblemConfirmation}
-        />
+        {isLoggedIn && (
+          <Route
+            exact
+            path="/problem/add"
+            render={(props) => (
+              <ProblemForm setLoggedIn={setLoggedIn} {...props} />
+            )}
+          />
+        )}
+        {isLoggedIn && (
+          <Route
+            exact
+            path="/problem/confirmation"
+            render={(props) => (
+              <ProblemConfirmation setLoggedIn={setLoggedIn} {...props} />
+            )}
+          />
+        )}
         <Redirect
           to={{
             pathname: "/login",

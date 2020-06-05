@@ -1,17 +1,22 @@
 import React, { Fragment, Component } from "react";
 import "./ProblemForm.css";
 import Axios from "../utils/axiosInstance";
+import ButtonAppBar from "./ButtonAppBar";
 import ProblemFormUI from "./ProblemFormUI";
-import Option from "./option";
+import Option from "./Option";
 import { v4 as uuid } from "uuid";
+import { withRouter } from "react-router-dom";
 const STATUS_OK = 200;
 const MIN_INPUT_LENGTH = 5;
 const MIN_OPTIONS_COUNT = 2;
+const API_TO_ADD_PROBLEM = "problem/add";
+const HOME_PAGE_LINK = "/mock-page";
 
-class ProblemForm extends Component {
+export class ProblemForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      user: {},
       questionText: "",
       newOptionText: "",
       optionList: [],
@@ -193,13 +198,20 @@ class ProblemForm extends Component {
         problemSetCode: this.state.problemSetCode,
       };
 
-      Axios.post("problem/add", payload)
+      Axios.post(API_TO_ADD_PROBLEM, payload)
         .then((res) => {
           if (res.status === STATUS_OK && res.data) {
             this.setState({
               isLoading: false,
             });
-            this.props.history.push("/problem/confirmation", res.data);
+            this.props.history.push({
+              pathname: HOME_PAGE_LINK,
+              state: {
+                problem: res.data,
+                username: this.state.user.username,
+                role: this.state.user.role,
+              },
+            });
           } else {
             this.setState({
               isLoading: false,
@@ -244,6 +256,7 @@ class ProblemForm extends Component {
           submit={this.submit}
           errorMessages={this.state.errorMessages}
           isLoading={this.state.isLoading}
+          backToPrevPage={this.props.history.goBack}
         />
         {this.state.errorMessages.api ? (
           <div className="api-error-message" data-testid="api-error-message">
@@ -257,6 +270,13 @@ class ProblemForm extends Component {
   };
 
   componentDidMount() {
+    this.setState({
+      user: {
+        username: this.props.history.location.state.username,
+        role: this.props.history.location.state.role,
+      },
+    });
+
     Axios.get("problem-set")
       .then((res) => {
         if (res.status === STATUS_OK && res.data) {
@@ -286,8 +306,16 @@ class ProblemForm extends Component {
   }
 
   render() {
-    return <div>{this.showProblemFormUI()}</div>;
+    return (
+      <div>
+        <ButtonAppBar
+          history={this.props.history}
+          setLoggedIn={this.props.setLoggedIn}
+        />
+        {this.showProblemFormUI()}
+      </div>
+    );
   }
 }
 
-export default ProblemForm;
+export default withRouter(ProblemForm);

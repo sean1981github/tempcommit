@@ -119,7 +119,7 @@ const TabPanels = (props) => {
         <div className="tab-panel-items">
           <CategoryCard />
           <ProblemSetCard />
-          <ProblemCard />
+          <ProblemCard history={props.history} />
           <QuizTemplateCard />
         </div>
       </TabPanel>

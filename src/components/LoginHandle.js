@@ -1,5 +1,4 @@
 import React, { Fragment } from "react";
-import { NavLink } from "react-router-dom";
 import Loader from "./Spinner";
 import Login from "./Login";
 import Axios from "../utils/axiosInstance";
@@ -125,12 +124,7 @@ class LoginHandle extends React.Component {
 
   render() {
     return (
-      <div>
-        {this.state.isLoading ? <Loader /> : this.showLoginForm()}
-        <NavLink data-testid="create-problem-link" exact to="/problem/add">
-          Create New Problem (Temp)
-        </NavLink>
-      </div>
+      <div>{this.state.isLoading ? <Loader /> : this.showLoginForm()}</div>
     );
   }
 }
