@@ -17,10 +17,11 @@ describe("Login Cypress", () => {
     loginHelper.clickSignIn();
     cy.get('[aria-label="audio-loading"]');
 
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(3000);
-
-    cy.get("#simple-tab-1").should("have.attr", "aria-selected", "true");
+    cy.get("#simple-tab-1", { timeout: 10000 }).should(
+      "have.attr",
+      "aria-selected",
+      "true"
+    );
   });
 
   it("it should display 'You have logged out' after clicking on the logout button", () => {
