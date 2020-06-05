@@ -11,6 +11,7 @@ const useStyles = makeStyles({
   root: {
     width: "35ch",
     height: "20ch",
+    marginLeft: "5ch",
     marginRight: "5ch",
   },
   button: {
