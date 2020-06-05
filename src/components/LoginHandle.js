@@ -128,7 +128,7 @@ class LoginHandle extends React.Component {
       <div>
         {this.state.isLoading ? <Loader /> : this.showLoginForm()}
         <NavLink data-testid="create-problem-link" exact to="/problem/add">
-          Create New Problem
+          Create New Problem (Temp)
         </NavLink>
       </div>
     );

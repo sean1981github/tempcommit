@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import Login from "./LoginHandle";
 import HomePage from "./HomePage";
-import MockPage from "./MockPage";
 import ProblemForm from "./ProblemForm";
 import ProblemConfirmation from "./ProblemConfirmation";
 
@@ -29,17 +28,17 @@ function Router() {
             )}
           />
         )}
-        <Redirect
-          to={{
-            pathname: "/login",
-            state: { message: "You are not authorised" },
-          }}
-        />
         <Route exact path="/problem/add" component={ProblemForm} />
         <Route
           exact
           path="/problem/confirmation"
           component={ProblemConfirmation}
+        />
+        <Redirect
+          to={{
+            pathname: "/login",
+            state: { message: "You are not authorised" },
+          }}
         />
         <Redirect to="/login" />
       </Switch>
