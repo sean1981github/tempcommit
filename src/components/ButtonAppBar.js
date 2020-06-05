@@ -45,7 +45,7 @@ const ButtonAppBar = (props) => {
           <IconButton
             edge="start"
             className={classes.menuButton}
-            color="inherit"
+            color="secondary"
             aria-label="menu"
             aria-controls="simple-menu"
             aria-haspopup="true"
