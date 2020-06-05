@@ -1,6 +1,6 @@
 import React from "react";
 import ButtonAppBar from "./ButtonAppBar";
-import TabPanel from "./TabPanel";
+import TabPanel from "./TabPanels";
 
 const HomePage = (props) => {
   return (

@@ -22,7 +22,7 @@ function Router() {
         {isLoggedIn && (
           <Route
             exact
-            path="/mock-page"
+            path="/home"
             render={(props) => (
               <HomePage setLoggedIn={setLoggedIn} {...props} />
             )}
