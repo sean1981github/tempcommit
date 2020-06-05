@@ -15,7 +15,7 @@ const Option = ({ index, option, deleteItem }) => {
         <RemoveCircleIcon
           data-testid={`delete-option-icon-${index}`}
           onClick={deleteItem}
-          color="secondary"
+          color="primary"
           fontSize={"large"}
         />
       </Grid>
