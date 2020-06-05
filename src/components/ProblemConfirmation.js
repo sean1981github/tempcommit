@@ -3,7 +3,7 @@ import { Typography } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
 import ProblemConfirmationUI from "./ProblemConfirmationUI";
 import ButtonAppBar from "./ButtonAppBar";
-const HOME_PAGE_LINK = "/mock-page";
+const HOME_PAGE_LINK = "/home";
 
 export class ProblemConfirmation extends Component {
   constructor(props) {
