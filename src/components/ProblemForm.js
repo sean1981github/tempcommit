@@ -27,6 +27,7 @@ class ProblemForm extends Component {
         problemSetCode: "",
         api: "",
       },
+      error: "",
     };
   }
 
@@ -198,6 +199,7 @@ class ProblemForm extends Component {
         .catch((error) => {
           this.setState({
             isLoading: false,
+            error: error,
             errorMessages: {
               ...this.state.errorMessages,
               api:
@@ -258,6 +260,7 @@ class ProblemForm extends Component {
       .catch((error) => {
         this.setState({
           isLoading: false,
+          error: error,
           errorMessages: {
             ...this.state.errorMessages,
             api:

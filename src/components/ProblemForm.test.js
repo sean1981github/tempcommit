@@ -187,7 +187,7 @@ describe("Problem Form Test", () => {
   });
 
   it("should show error message when API call to retrieve problem sets returns with non-200 status codes", async () => {
-    const { getByTestId, getByText } = render(<ProblemForm />);
+    const { getByText } = render(<ProblemForm />);
 
     mockAxios.onGet("/problem-set").reply(203);
     await waitForPromises();
@@ -200,7 +200,7 @@ describe("Problem Form Test", () => {
   });
 
   it("should show error message when API call to retrieve problem sets encounters network error", async () => {
-    const { getByTestId, getByText } = render(<ProblemForm />);
+    const { getByText } = render(<ProblemForm />);
 
     mockAxios.onGet("/problem-set").networkError();
     await waitForPromises();
