@@ -10,7 +10,7 @@ const STATUS_OK = 200;
 const MIN_INPUT_LENGTH = 5;
 const MIN_OPTIONS_COUNT = 2;
 const API_TO_ADD_PROBLEM = "problem/add";
-const HOME_PAGE_LINK = "/mock-page";
+const LINK_TO_CONFIRM_PROBLEM = "/problem/confirmation";
 
 export class ProblemForm extends Component {
   constructor(props) {
@@ -205,7 +205,7 @@ export class ProblemForm extends Component {
               isLoading: false,
             });
             this.props.history.push({
-              pathname: HOME_PAGE_LINK,
+              pathname: LINK_TO_CONFIRM_PROBLEM,
               state: {
                 problem: res.data,
                 username: this.state.user.username,

@@ -1,8 +1,9 @@
 import React from "react";
 import MockAdapter from "axios-mock-adapter";
 import "@testing-library/jest-dom/extend-expect";
-import { render, fireEvent } from "@testing-library/react";
+import { render, fireEvent, waitForElement } from "@testing-library/react";
 import { ProblemForm } from "../components/ProblemForm";
+import App from "../App";
 import Axios from "../utils/axiosInstance";
 
 const mockAxios = new MockAdapter(Axios);
@@ -54,7 +55,7 @@ describe("Problem Form Test", () => {
 
   it("should render create problem page with no issue", () => {
     const { getByText } = render(<ProblemForm history={mockHistory} />);
-    expect(getByText("Add Problem")).toBeInTheDocument();
+    expect(getByText("Create New Problem")).toBeInTheDocument();
   });
 
   it("should render input textfield for question", () => {
@@ -453,5 +454,35 @@ describe("Problem Form Test", () => {
     fireEvent.click(backButton);
 
     expect(mockHistory.goBack).toHaveBeenCalled();
+  });
+
+  it("full login -> creat problem -> logout flow", async () => {
+    const { getByTestId, getByText } = render(<App />);
+    const username = getByTestId("username");
+    const password = getByTestId("password");
+    const signinButton = getByTestId("signin");
+
+    fireEvent.change(username, {
+      target: { value: "username" },
+    });
+    fireEvent.change(password, {
+      target: { value: "password" },
+    });
+    fireEvent.click(signinButton);
+    mockAxios.onPost("/users/login").reply(200, { role: "QM", username: "qm" });
+
+    await waitForElement(() => getByTestId("create-problem-button"));
+
+    const createProblemButton = getByTestId("create-problem-button");
+    fireEvent.click(createProblemButton);
+
+    await waitForElement(() => getByText("Create New Problem"));
+
+    const logoutButton = getByTestId("logoutButton");
+    fireEvent.click(logoutButton);
+    mockAxios.onPost("/users/logout").reply(200);
+
+    expect(getByText("You have logged out")).toBeInTheDocument();
+    expect(getByTestId("username")).toBeInTheDocument();
   });
 });

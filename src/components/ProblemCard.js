@@ -32,7 +32,7 @@ export const ProblemCard = (props) => {
     role: props.history.location.state.role,
   };
 
-  const redirectAddProblemPage = () => {
+  const toAddProblemPage = () => {
     props.history.push({
       pathname: LINK_TO_CREATE_PROBLEM,
       state: user,
@@ -50,7 +50,7 @@ export const ProblemCard = (props) => {
         <CardActions>
           <div className="button-group-qm">
             <Button
-              onClick={redirectAddProblemPage}
+              onClick={toAddProblemPage}
               data-testid="create-problem-button"
               variant="contained"
               className={classes.button}

@@ -72,7 +72,7 @@ const ProblemFormUI = (props) => {
     <Container className="problem-page-container" maxWidth={"md"}>
       <Grid container spacing={6} direction="column">
         <Grid justify={"center"} item xs={12} container>
-          <Typography variant="h2">Add Problem</Typography>
+          <Typography variant="h2">Create New Problem</Typography>
         </Grid>
 
         <Grid item xs={12} container>

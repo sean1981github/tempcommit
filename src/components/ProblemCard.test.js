@@ -14,8 +14,8 @@ describe("Problem Card Test", () => {
   it("should trigger redirect to Problem Create Page when Create Problem button is clicked", () => {
     const { getByTestId } = render(<ProblemCard history={mockHistory} />);
 
-    const backButton = getByTestId("create-problem-button");
-    fireEvent.click(backButton);
+    const createProblemButton = getByTestId("create-problem-button");
+    fireEvent.click(createProblemButton);
     expect(mockHistory.push).toHaveBeenCalled();
   });
 });
