@@ -16,6 +16,10 @@ describe("Login Cypress", () => {
     loginHelper.enterPassword(Cypress.env("HR_PASS"));
     loginHelper.clickSignIn();
     cy.get('[aria-label="audio-loading"]');
+
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(3000);
+
     cy.get("#simple-tab-1").should("have.attr", "aria-selected", "true");
   });
 
