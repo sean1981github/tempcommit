@@ -5,7 +5,7 @@ import HomePage from "./HomePage";
 import ProblemForm from "./ProblemForm";
 import ProblemConfirmation from "./ProblemConfirmation";
 
-function Router() {
+const Router = () => {
   const [isLoggedIn, setLoggedIn] = useState(false);
 
   return (
@@ -56,6 +56,6 @@ function Router() {
       </Switch>
     </div>
   );
-}
+};
 
 export default Router;

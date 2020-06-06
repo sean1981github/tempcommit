@@ -13,7 +13,6 @@ const useStyles = makeStyles({
     height: "25ch",
     marginLeft: "5ch",
     marginRight: "5ch",
-    textAlign: "center",
   },
   button: {
     marginTop: 5,
