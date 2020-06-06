@@ -1,27 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
-import Typography from "@material-ui/core/Typography";
-import Box from "@material-ui/core/Box";
-import CategoryCard from "./CategoryCard";
-import ProblemSetCard from "./ProblemSetCard";
-import ProblemCard from "./ProblemCard";
-import QuizTemplateCard from "./QuizTemplateCard";
-import CreateQuizCard from "./CreateQuizCard";
-import QuizResultsCard from "./QuizResultsCard";
-import ResultsCard from "./ResultsCard";
+import { AppBar, Tabs, Tab, Typography, Box, Grid } from "@material-ui/core";
 
-import "./HomePage.css";
+import CardFactory from "./CardFactory";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
   const BOX_NUM = 3;
 
   return (
-    <div
+    <Box
       role="tabpanel"
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
@@ -33,7 +22,7 @@ function TabPanel(props) {
           <Typography>{children}</Typography>
         </Box>
       )}
-    </div>
+    </Box>
   );
 }
 
@@ -55,6 +44,21 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
   },
+  appBar: {
+    backgroundColor: theme.palette.primary.dark,
+  },
+  tab: {
+    backgroundColor: theme.palette.primary.dark,
+  },
+  tabPanel: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  gridContainer: {
+    justify: "center",
+    spacing: 10,
+  },
 }));
 
 const TabPanels = (props) => {
@@ -63,24 +67,26 @@ const TabPanels = (props) => {
   let disableQMFlag = true;
   let disableAssessorFlag = true;
   let disableAdminFlag = true;
-  const TAB_INDEX_ZERO = 0;
-  const TAB_INDEX_ONE = 1;
-  const TAB_INDEX_TWO = 2;
-  const TAB_INDEX_THREE = 3;
+  const TAB_INDICES = {
+    zero: 0,
+    one: 1,
+    two: 2,
+    three: 3,
+  };
 
-  let defaultTabIndex = TAB_INDEX_ZERO;
+  let defaultTabIndex = TAB_INDICES.zero;
 
   if (role === "QM") {
     disableQMFlag = false;
   } else if (role === "HR") {
     disableHRFlag = false;
-    defaultTabIndex = TAB_INDEX_ONE;
+    defaultTabIndex = TAB_INDICES.one;
   } else if (role === "ASSESSOR") {
     disableAssessorFlag = false;
-    defaultTabIndex = TAB_INDEX_TWO;
+    defaultTabIndex = TAB_INDICES.two;
   } else {
     disableAdminFlag = false;
-    defaultTabIndex = TAB_INDEX_THREE;
+    defaultTabIndex = TAB_INDICES.three;
   }
 
   const classes = useStyles();
@@ -90,56 +96,76 @@ const TabPanels = (props) => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  const tabGrid = (
+    <Grid
+      container
+      justify="center"
+      spacing="5"
+      className={classes.gridContainer}
+    >
+      <CardFactory
+        history={props.history}
+        role={props.history.location.state.role}
+      />
+    </Grid>
+  );
 
   return (
-    <div className={classes.root}>
-      <AppBar position="static">
+    <Box component="div" className={classes.root}>
+      <AppBar position="static" className={classes.appBar}>
         <Tabs
+          className={classes.tab}
           value={value}
           onChange={handleChange}
-          aria-label="simple tabs example"
+          aria-label="simple tabs"
+          centered
+          variant="fullWidth"
         >
-          <Tab label="QUIZ MASTER" {...a11yProps(0)} disabled={disableQMFlag} />
-          <Tab label="HR" {...a11yProps(1)} disabled={disableHRFlag} />
+          <Tab
+            label="QUIZ MASTER"
+            {...a11yProps(0)}
+            disabled={disableQMFlag}
+            data-testid="qm-tab"
+            className={classes.tab}
+          />
+          <Tab
+            label="HR"
+            {...a11yProps(1)}
+            disabled={disableHRFlag}
+            data-testid="hr-tab"
+            className={classes.tab}
+          />
           <Tab
             label="ASSESSOR"
             {...a11yProps(2)}
             disabled={disableAssessorFlag}
+            data-testid="asessor-tab"
+            className={classes.tab}
           />
           <Tab
             label="ADMIN"
             {...a11yProps(3)}
             disabled={disableAdminFlag}
             data-testid="admin-tab"
+            className={classes.tab}
           />
         </Tabs>
       </AppBar>
-
-      <TabPanel value={value} index={0}>
-        <div className="tab-panel-items">
-          <CategoryCard />
-          <ProblemSetCard />
-          <ProblemCard history={props.history} />
-          <QuizTemplateCard />
-        </div>
+      <TabPanel value={value} index={TAB_INDICES.zero}>
+        {tabGrid}
       </TabPanel>
-      <TabPanel value={value} index={1}>
-        <div className="tab-panel-items">
-          <CreateQuizCard />
-          <QuizResultsCard />
-        </div>
+      <TabPanel value={value} index={TAB_INDICES.one}>
+        {tabGrid}
       </TabPanel>
-      <TabPanel value={value} index={2}>
-        <div className="tab-panel-items" data-testId="assessor-menu-items">
-          <ResultsCard />
-        </div>
+      <TabPanel value={value} index={TAB_INDICES.two}>
+        {tabGrid}
       </TabPanel>
-      <TabPanel value={value} index={3}>
-        <div className="tab-panel-items" data-testId="admin-menu-items">
+      <TabPanel value={value} index={TAB_INDICES.three}>
+        <Typography data-testId="admin-menu-items">
           Placeholder for the menu items of Admin
-        </div>
+        </Typography>
       </TabPanel>
-    </div>
+    </Box>
   );
 };
 

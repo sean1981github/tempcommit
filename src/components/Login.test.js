@@ -117,7 +117,7 @@ describe("LoginPage", () => {
       getByText("Something is wrong.Please try again")
     ).toBeInTheDocument();
   });
-  it("should render mockpage if username and password are correct and logout successfully", async () => {
+  it("login -> homepage-> logout", async () => {
     const { getByTestId, getByText, getByLabelText } = render(<App />);
     const username = getByTestId("username");
     const password = getByTestId("password");
@@ -132,13 +132,18 @@ describe("LoginPage", () => {
     fireEvent.click(signinButton);
     mockAxios
       .onPost("/users/login")
-      .reply(200, { role: "HR", username: "username" });
-    await waitForElement(() => getByText("username"));
-    expect(getByText("username")).toBeInTheDocument();
+      .reply(200, { role: "QM", username: "username" });
+    await waitForElement(() => getByText(/username/));
+    expect(getByText(/username/)).toBeInTheDocument();
     const menu = getByLabelText("menu");
     expect(menu).toBeInTheDocument();
     fireEvent.click(menu);
-    const logoutButton = getByTestId("logoutButton");
+    const logoutButton = getByText("Logout");
+    expect(logoutButton).toBeInTheDocument();
+    const problemSetText = getByText("PROBLEM SET");
+    fireEvent.click(problemSetText);
+    expect(() => getByLabelText("Logout")).toThrowError();
+    fireEvent.click(menu);
     fireEvent.click(logoutButton);
     mockAxios.onPost("/users/logout").reply(200);
     expect(getByText("You have logged out")).toBeInTheDocument();

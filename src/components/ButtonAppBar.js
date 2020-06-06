@@ -1,12 +1,15 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import IconButton from "@material-ui/core/IconButton";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  IconButton,
+  Menu,
+  MenuItem,
+  Box,
+} from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
 import Axios from "../utils/axiosInstance";
 
 const useStyles = makeStyles((theme) => ({
@@ -39,7 +42,7 @@ const ButtonAppBar = (props) => {
   };
 
   return (
-    <div className={classes.root}>
+    <Box className={classes.root}>
       <AppBar position="static">
         <Toolbar>
           <IconButton
@@ -53,7 +56,9 @@ const ButtonAppBar = (props) => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography>{props.history.location.state.username}</Typography>
+          <Typography>
+            Welcome, {props.history.location.state.username}!
+          </Typography>
           <Menu
             id="simple-menu"
             anchorEl={anchorEl}
@@ -67,7 +72,7 @@ const ButtonAppBar = (props) => {
           </Menu>
         </Toolbar>
       </AppBar>
-    </div>
+    </Box>
   );
 };
 

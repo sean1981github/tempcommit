@@ -27,11 +27,7 @@ describe("HomePage", () => {
         .onPost("/users/login")
         .reply(200, { role: "ASSESSOR", username: "username" });
     });
-    it("should load homepage with username displayed", async () => {
-      const { getByText } = render(<App />);
-      await waitForElement(() => getByText("username"));
-      expect(getByText("username")).toBeInTheDocument();
-    });
+
     it("should load ASSESSOR homepage with required tabs", () => {
       const { getByText } = render(<App />);
       expect(getByText("QUIZ MASTER")).toBeInTheDocument();
@@ -80,8 +76,8 @@ describe("HomePage", () => {
     });
     it("should load homepage with username displayed", async () => {
       const { getByText } = render(<App />);
-      await waitForElement(() => getByText("username"));
-      expect(getByText("username")).toBeInTheDocument();
+      await waitForElement(() => getByText(/username/));
+      expect(getByText(/username/)).toBeInTheDocument();
     });
     it("should load HR homepage with required tabs", () => {
       const { getByText } = render(<App />);
@@ -132,11 +128,7 @@ describe("HomePage", () => {
         .onPost("/users/login")
         .reply(200, { role: "QM", username: "username" });
     });
-    it("should load homepage with username displayed", async () => {
-      const { getByText } = render(<App />);
-      await waitForElement(() => getByText("username"));
-      expect(getByText("username")).toBeInTheDocument();
-    });
+
     it("should load QM homepage with required tabs", () => {
       const { getByText } = render(<App />);
       expect(getByText("QUIZ MASTER")).toBeInTheDocument();
@@ -193,11 +185,6 @@ describe("HomePage", () => {
         .onPost("/users/login")
         .reply(200, { role: "HR", username: "username" });
     });
-    it("should load homepage with username displayed", async () => {
-      const { getByText } = render(<App />);
-      await waitForElement(() => getByText("username"));
-      expect(getByText("username")).toBeInTheDocument();
-    });
     it("should load HR homepage with required tabs", () => {
       const { getByText } = render(<App />);
       expect(getByText("QUIZ MASTER")).toBeInTheDocument();
@@ -247,11 +234,7 @@ describe("HomePage", () => {
         .onPost("/users/login")
         .reply(200, { role: "ADMIN", username: "username" });
     });
-    it("should load homepage with username displayed", async () => {
-      const { getByText } = render(<App />);
-      await waitForElement(() => getByText("username"));
-      expect(getByText("username")).toBeInTheDocument();
-    });
+
     it("should load ADMIN homepage with required tabs", () => {
       const { getByText } = render(<App />);
       expect(getByText("QUIZ MASTER")).toBeInTheDocument();
@@ -272,8 +255,8 @@ describe("HomePage", () => {
       expect(() => getByTestId("assessor-menu-items")).toThrowError();
     });
     it("should render menu items for ADMIN", () => {
-      const { getByText } = render(<App />);
-      const adminTab = getByText("ADMIN");
+      const { getByTestId } = render(<App />);
+      const adminTab = getByTestId("admin-tab");
       fireEvent.click(adminTab);
     });
   });

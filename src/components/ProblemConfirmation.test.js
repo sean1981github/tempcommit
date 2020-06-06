@@ -111,9 +111,9 @@ describe("Problem Creation Confirmation Test", () => {
     fireEvent.click(signinButton);
     mockAxios.onPost("/users/login").reply(200, { role: "QM", username: "qm" });
 
-    await waitForElement(() => getByTestId("create-problem-button"));
+    await waitForElement(() => getByTestId("Create New Problem"));
 
-    const createProblemButton = getByTestId("create-problem-button");
+    const createProblemButton = getByTestId("Create New Problem");
     fireEvent.click(createProblemButton);
 
     mockAxios.onGet("/problem-set").reply(200, mockGetProblemSetsResponse);
