@@ -1,10 +1,10 @@
 import React from "react";
 import Card from "./HomeCard";
 import { Grid } from "@material-ui/core";
-import data from "../data/HomePageData";
+import homepageData from "../data/HomePageData";
 
 const CardFactory = (props) => {
-  const cardInfo = data.filter((data) => data.role === props.role);
+  const cardInfo = homepageData.filter((data) => data.role === props.role);
 
   return cardInfo[0].cards.map((card) => {
     return (

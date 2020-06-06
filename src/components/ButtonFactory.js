@@ -1,9 +1,9 @@
 import React from "react";
 import Button from "./HomeButton.js";
-import data from "../data/HomePageData";
+import homepageData from "../data/HomePageData";
 
 const ButtonFactory = (props) => {
-  const cardInfo = data.filter((data) => data.role === props.role);
+  const cardInfo = homepageData.filter((data) => data.role === props.role);
   const buttonInfo = cardInfo[0].cards.filter(
     (card) => card.title === props.title
   );
