@@ -66,28 +66,28 @@ const TabBar = (props) => {
         >
           <Tab
             label="QUIZ MASTER"
-            {...a11yProps(0)}
+            {...a11yProps(tabIndices.zero)}
             disabled={disableQMFlag}
             data-testid="qm-tab"
             className={classes.tab}
           />
           <Tab
             label="HR"
-            {...a11yProps(1)}
+            {...a11yProps(tabIndices.one)}
             disabled={disableHRFlag}
             data-testid="hr-tab"
             className={classes.tab}
           />
           <Tab
             label="ASSESSOR"
-            {...a11yProps(2)}
+            {...a11yProps(tabIndices.two)}
             disabled={disableAssessorFlag}
             data-testid="asessor-tab"
             className={classes.tab}
           />
           <Tab
             label="ADMIN"
-            {...a11yProps(3)}
+            {...a11yProps(tabIndices.three)}
             disabled={disableAdminFlag}
             data-testid="admin-tab"
             className={classes.tab}
