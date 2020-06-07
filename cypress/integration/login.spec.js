@@ -2,7 +2,7 @@ import loginHelper from "../support/login-helper";
 
 describe("Login Cypress", () => {
   it("visit the CASE site", () => {
-    cy.visit("http://localhost:3000");
+    cy.visit("https://case-selfeval-frontend.herokuapp.com");
   });
 
   it("should render WELCOME TO CASE text", () => {
@@ -58,7 +58,7 @@ describe("Login Cypress", () => {
     loginHelper.clickSignIn();
     cy.get('[aria-label="audio-loading"]');
     loginHelper.clickLogOut();
-    cy.visit("http://localhost:3000/home");
+    cy.visit("https://case-selfeval-frontend.herokuapp.com/home");
     cy.contains("You are not authorised");
   });
 });
