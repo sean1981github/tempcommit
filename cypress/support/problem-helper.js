@@ -10,7 +10,6 @@ class ProblemHelper {
     cy.contains(option);
   }
   deleteOption(option, optionDescr) {
-    //   const attr = [data-testid="delete-option-icon-2"]
     cy.get(`[data-testid="delete-option-icon-${option}"]`).click();
     cy.contains(optionDescr).should("not.exist");
   }
