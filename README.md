@@ -15,3 +15,22 @@ In the project directory, you can run :
 ### `npm start`
 
 Runs project in development mode
+
+### Integration with Homepage
+
+1. In src/data/HomePageData.js, add the relative path to the respective button.
+
+E.g. to add path to the "Create New Category" button in the CATEGORY card under "Quiz Master" tab:
+
+{
+role: "QM",
+cards: [
+{
+title: "CATEGORY",
+buttons: [
+{ title: "Create New Category", path: "/category/add" },
+{ title: "Edit Existing Category", path: "" },
+],
+},
+
+2. Add the protected path to src/components/Router.js.

@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { Typography, Box } from "@material-ui/core";
+import { Box } from "@material-ui/core";
 import Loader from "./Spinner";
 import Login from "./Login";
 import Axios from "../utils/axiosInstance";
@@ -113,9 +113,9 @@ class LoginHandle extends React.Component {
           handleLogin={this.handleLogin}
         />
         {this.state.errorMessage ? (
-          <Typography className="error" data-testid="error">
+          <Box data-testid="error" className="error">
             {this.state.errorMessage}
-          </Typography>
+          </Box>
         ) : (
           <Box></Box>
         )}
