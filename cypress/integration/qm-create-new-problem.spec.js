@@ -46,13 +46,12 @@ describe("Create new Problem test", () => {
   });
 
   it("should be able to click submit button and redirect to confirmation page", () => {
-    cy.contains('Submit').click();
-    cy.contains('is successfully saved/updated/deleted');
-  })
+    cy.contains("Submit").click();
+    cy.contains("is successfully saved/updated/deleted");
+  });
 
-  it('click BACK TO HOME button and redirect to home page', () => {
-    cy.contains('Back To Home').click();
-    cy.contains('Create New Problem');
-    // cy.contains('is successfully saved/updated/deleted');
+  it("click BACK TO HOME button and redirect to home page", () => {
+    cy.contains("Back To Home").click();
+    cy.contains("Create New Problem");
   });
 });
