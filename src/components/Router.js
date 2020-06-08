@@ -5,6 +5,8 @@ import HomePage from "./HomePage";
 import ProblemForm from "./ProblemForm";
 import ProblemConfirmation from "./ProblemConfirmation";
 import QuizForm from "./QuizForm";
+import QuizTemplateForm from "./QuizTemplateForm";
+import QuizTemplateConfirmation from "./QuizTemplateConfirmation";
 
 const Router = () => {
   const [isLoggedIn, setLoggedIn] = useState(false);
@@ -48,6 +50,24 @@ const Router = () => {
           />
         )}
         <Route exact path="/quiz/add" component={QuizForm} />
+        {isLoggedIn && (
+          <Route
+            exact
+            path="/quiz-template/add"
+            render={(props) => (
+              <QuizTemplateForm setLoggedIn={setLoggedIn} {...props} />
+            )}
+          />
+        )}
+        {isLoggedIn && (
+          <Route
+            exact
+            path="/quiz-template/confirmation"
+            render={(props) => (
+              <QuizTemplateConfirmation setLoggedIn={setLoggedIn} {...props} />
+            )}
+          />
+        )}
         <Redirect
           to={{
             pathname: "/login",

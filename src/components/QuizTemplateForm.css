@@ -1,0 +1,14 @@
+.question-textfield {
+  width: 100%;
+}
+
+.option-textfield {
+  width: 80%;
+  margin-right: 5%;
+}
+
+.api-error-message {
+  margin-top: 5vh;
+  color: red;
+  font-weight: bold;
+}
