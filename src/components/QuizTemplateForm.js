@@ -64,78 +64,36 @@ export class QuizTemplateForm extends Component {
     this.setState({ problemSetNumberText: event.target.value });
   };
 
-  validateNewProblemSet = async () => {
+  validateNewProblemSet = () => {
     this.setState({
       errorMessages: {
         problemSetNumberText: "",
-        problemSetQuestionNumberText: "",
       },
     });
-
     const problemSetNumberText = this.state.problemSetNumberText;
     const problemSetCode = this.state.problemSetCode;
     const invalidProblemSetNumberText =
-      !problemSetNumberText || problemSetNumberText <= 0;
+      !problemSetNumberText || problemSetNumberText < 0;
     const invalidProblemSetCode = !problemSetCode;
 
-    if (invalidProblemSetNumberText || invalidProblemSetCode) {
+    if (invalidProblemSetNumberText) {
       this.setState({
         errorMessages: {
           ...this.state.errorMessages,
-          problemSetNumberText: invalidProblemSetNumberText
-            ? "Problem set number cannot empty and needs to be > 0"
-            : "",
-          problemSetCode: invalidProblemSetCode
-            ? "Please select a Problem Set"
-            : "",
+          problemSetNumberText:
+            "Problem set number cannot empty and needs to be > 0",
+          // totalDurationText: invalidProblemSetNumberText
+          //   ? `Total duration cannot be empty and needs to be >=  ${MIN_TOTAL_DURATION} and <=  ${MAX_TOTAL_DURATION}`
+          //   : "",
         },
       });
       return false;
-    } else {
-      let problemCount = 0;
-      await Axios.get(`problem/${problemSetCode}/countproblem`)
-        .then((res) => {
-          if (res.status === STATUS_OK && res.data) {
-            problemCount = res.data;
-          } else {
-            this.setState({
-              isLoading: false,
-              errorMessages: {
-                ...this.state.errorMessages,
-                api:
-                  "Failed to retrieve problem count. Please refresh page and try again.",
-              },
-            });
-          }
-        })
-        .catch((error) => {
-          this.setState({
-            isLoading: false,
-            apiError: error,
-            errorMessages: {
-              ...this.state.errorMessages,
-              api:
-                "Failed to retrieve problem count. Please refresh page and try again.",
-            },
-          });
-        });
-      if (parseInt(problemCount) < parseInt(problemSetNumberText)) {
-        this.setState({
-          errorMessages: {
-            ...this.state.errorMessages,
-            problemSetQuestionNumberText:
-              "Number of questions should not exceed the maximum number in Problem Set",
-          },
-        });
-        return false;
-      } else {
-        return true;
-      }
     }
+    return true;
   };
 
-  handleAddNewProblemSet = async () => {
-    if ((await this.validateNewProblemSet()) === false) {
+  handleAddNewProblemSet = () => {
+    if (this.validateNewProblemSet() === false) {
       return;
     } else {
       const newProblemSet = {
