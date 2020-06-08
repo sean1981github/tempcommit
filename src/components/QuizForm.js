@@ -1,3 +1,4 @@
+import "date-fns";
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -6,9 +7,13 @@ import {
   Typography,
   Box,
   MenuItem,
-  Select,
   Grid,
 } from "@material-ui/core";
+import DateFnsUtils from "@date-io/date-fns";
+import {
+  KeyboardDatePicker,
+  MuiPickersUtilsProvider,
+} from "@material-ui/pickers";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,42 +39,32 @@ const useStyles = makeStyles((theme) => ({
     width: 600,
     padding: "2rem 1rem 2rem 1rem",
   },
+  gridContainer: {
+    direction: "row",
+    justify: "flex-start",
+    alignItems: "baseline",
+  },
 }));
 
 const QuizForm = (props) => {
   const classes = useStyles();
+
+  const [selectedDate, setSelectedDate] = React.useState(new Date());
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  };
 
   return (
     <Box className={classes.root}>
       <Typography variant="h6">Create Quiz</Typography>
       <form className={classes.form} noValidate autoComplete="off">
         <Grid container justify="center" spacing="5">
-          <Grid
-            item
-            xs={12}
-            container
-            direction={"row"}
-            justify={"flex-start"}
-            alignItems={"baseline"}
-          >
-            <Grid
-              item
-              xs={4}
-              container
-              direction={"row"}
-              justify={"flex-start"}
-              alignItems={"baseline"}
-            >
+          <Grid item xs={12} container className={classes.gridContainer}>
+            <Grid item xs={4} container className={classes.gridContainer}>
               <Typography variant="h6">Candidate Name:</Typography>
             </Grid>
-            <Grid
-              item
-              xs={8}
-              container
-              direction={"row"}
-              justify={"flex-start"}
-              alignItems={"baseline"}
-            >
+            <Grid item xs={8} container className={classes.gridContainer}>
               <TextField
                 required
                 inputProps={{ "data-testid": "candidate-name" }}
@@ -80,32 +75,11 @@ const QuizForm = (props) => {
               />
             </Grid>
           </Grid>
-          <Grid
-            item
-            xs={12}
-            container
-            direction={"row"}
-            justify={"flex-start"}
-            alignItems={"baseline"}
-          >
-            <Grid
-              item
-              xs={4}
-              container
-              direction={"row"}
-              justify={"flex-start"}
-              alignItems={"baseline"}
-            >
+          <Grid item xs={12} container className={classes.gridContainer}>
+            <Grid item xs={4} container className={classes.gridContainer}>
               <Typography variant="h6">Candidate Email:</Typography>
             </Grid>
-            <Grid
-              item
-              xs={8}
-              container
-              direction={"row"}
-              justify={"flex-start"}
-              alignItems={"baseline"}
-            >
+            <Grid item xs={8} container className={classes.gridContainer}>
               <TextField
                 required
                 inputProps={{ "data-testid": "candidate-email" }}
@@ -116,44 +90,46 @@ const QuizForm = (props) => {
               />
             </Grid>
           </Grid>
-          <Grid
-            item
-            xs={12}
-            container
-            direction={"row"}
-            justify={"flex-start"}
-            alignItems={"baseline"}
-          >
-            <Grid
-              item
-              xs={4}
-              container
-              direction={"row"}
-              justify={"flex-start"}
-              alignItems={"baseline"}
-            >
+          <Grid item xs={12} container className={classes.gridContainer}>
+            <Grid item xs={4} container className={classes.gridContainer}>
               <Typography variant="h6">Quiz Template:</Typography>
             </Grid>
-            <Grid
-              item
-              xs={8}
-              container
-              direction={"row"}
-              justify={"flex-start"}
-              alignItems={"baseline"}
-            >
-              <Select
-                className={classes.select}
-                labelId="select-quiz-template"
-                id="select-quiz-template"
-                inputProps={{ "data-testid": "select-quiz-template" }}
+            <Grid item xs={8} container className={classes.gridContainer}>
+              <TextField
+                select
+                required
                 value={props.quizTemplateCode}
                 onChange={props.handleSelectQuizTemplateCode}
+                selectProps={{
+                  selectDisplayprops: { "data-testid": "select-quiz-template" },
+                }}
               >
                 <MenuItem value={"template1"}>Template1</MenuItem>
                 <MenuItem value={"template2"}>Template2</MenuItem>
                 <MenuItem value={"template3"}>Template3</MenuItem>
-              </Select>
+              </TextField>
+            </Grid>
+          </Grid>
+          <Grid item xs={12} container className={classes.gridContainer}>
+            <Grid item xs={4} container className={classes.gridContainer}>
+              <Typography variant="h6">Quiz Expiry Date:</Typography>
+            </Grid>
+            <Grid item xs={8} container className={classes.gridContainer}>
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <Grid container justify="left">
+                  <KeyboardDatePicker
+                    margin="normal"
+                    id="expiry-date-picker-dialog"
+                    label="Date picker dialog"
+                    format="dd/MM/yyyy"
+                    value={selectedDate}
+                    onChange={handleDateChange}
+                    KeyboardButtonProps={{
+                      "aria-label": "change date",
+                    }}
+                  />
+                </Grid>
+              </MuiPickersUtilsProvider>
             </Grid>
           </Grid>
           <Grid container xs={12} justify="center">

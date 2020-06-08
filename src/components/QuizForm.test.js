@@ -12,5 +12,6 @@ describe("QuizForm", () => {
     expect(getByText("Quiz Template:")).toBeInTheDocument();
     expect(getByTestId("create-quiz-back")).toBeInTheDocument();
     expect(getByTestId("create-quiz-submit")).toBeInTheDocument();
+    expect(getByText("Quiz Expiry Date:")).toBeInTheDocument();
   });
 });
