@@ -22,6 +22,15 @@ const mockGetProblemSetsResponse = [
 
 const mockProblemSetCount = "20";
 
+const mockCreateQuizTemplateResponse = {
+  id: "6a0c4bdb-5769-48d3-9ef7-e0aee022e225",
+  quizTemplateCode: "Agile-easy-quiz-template1",
+  passingScore: 80,
+  totalScore: 100,
+  totalDurationInMins: 120,
+  problemSetsNumber: [{ categoryCode: "Agile-easy", numberOfQuestions: 20 }],
+};
+
 const mockHistory = {
   push: jest.fn(),
   goBack: jest.fn(),
@@ -88,6 +97,144 @@ describe("Quiz Template Test", () => {
     expect(getByTestId("submit-button")).toBeInTheDocument();
   });
 
+  it("should display error when adding empty problem set number", async () => {
+    const { getByTestId, getByText, queryByText } = render(
+      <QuizTemplateForm history={mockHistory} />
+    );
+
+    mockAxios.onGet("/problem-set").reply(200, mockGetProblemSetsResponse);
+    await waitForPromises();
+
+    const addProblemSetButton = getByTestId("add-problemset-button");
+    fireEvent.click(addProblemSetButton);
+    expect(
+      getByText("Problem set number cannot empty and needs to be > 0")
+    ).toBeInTheDocument();
+
+    const problemSetNumber = getByTestId("problemset-number-textfield");
+    fireEvent.change(problemSetNumber, {
+      target: { value: "10" },
+    });
+    fireEvent.click(addProblemSetButton);
+    mockAxios
+      .onGet("/problem/Agile-easy/countproblem")
+      .reply(200, mockProblemSetCount);
+    await waitForPromises();
+    expect(
+      queryByText("Problem set number cannot empty and needs to be > 0")
+    ).not.toBeInTheDocument();
+
+    expect(getByText("Agile-medium")).toBeInTheDocument();
+  });
+
+  it("should display error when adding selected number of questions is more than dataset available problems", async () => {
+    const { getByTestId, getByText, queryByText } = render(
+      <QuizTemplateForm history={mockHistory} />
+    );
+
+    mockAxios.onGet("/problem-set").reply(200, mockGetProblemSetsResponse);
+    await waitForPromises();
+
+    const addProblemSetButton = getByTestId("add-problemset-button");
+    const problemSetNumber = getByTestId("problemset-number-textfield");
+    fireEvent.change(problemSetNumber, {
+      target: { value: "30" },
+    });
+    fireEvent.click(addProblemSetButton);
+    mockAxios
+      .onGet("/problem/Agile-easy/countproblem")
+      .reply(200, mockProblemSetCount);
+    await waitForPromises();
+    expect(
+      getByText(
+        "Number of questions should not exceed the maximum number in Problem Set"
+      )
+    ).toBeInTheDocument();
+
+    fireEvent.change(problemSetNumber, {
+      target: { value: "10" },
+    });
+    fireEvent.click(addProblemSetButton);
+    mockAxios
+      .onGet("/problem/Agile-easy/countproblem")
+      .reply(200, mockProblemSetCount);
+    await waitForPromises();
+    expect(
+      queryByText(
+        "Number of questions should not exceed the maximum number in Problem Set"
+      )
+    ).not.toBeInTheDocument();
+
+    expect(getByText("Agile-medium")).toBeInTheDocument();
+  });
+
+  it("should allow user to select other problem set from drop down", async () => {
+    const { getByTestId, getByText } = render(
+      <QuizTemplateForm history={mockHistory} />
+    );
+
+    mockAxios.onGet("/problem-set").reply(200, mockGetProblemSetsResponse);
+    await waitForPromises();
+
+    const problemSetCodeSelect = getByTestId("problemSetCode-select");
+    fireEvent.mouseDown(problemSetCodeSelect);
+    const problemSetAgileMedium = getByText("Agile-medium");
+    fireEvent.click(problemSetAgileMedium);
+    const addProblemSetButton = getByTestId("add-problemset-button");
+    const problemSetNumber = getByTestId("problemset-number-textfield");
+    fireEvent.change(problemSetNumber, {
+      target: { value: "10" },
+    });
+    fireEvent.click(addProblemSetButton);
+    mockAxios
+      .onGet("/problem/Agile-medium/countproblem")
+      .reply(200, mockProblemSetCount);
+    await waitForPromises();
+    expect(getByText("1. Agile-medium - 10")).toBeInTheDocument();
+
+    expect(getByText("Agile-easy")).toBeInTheDocument();
+  });
+
+  it("should allow user to add multiple problem set from drop down", async () => {
+    const { getByTestId, getByText, queryByText } = render(
+      <QuizTemplateForm history={mockHistory} />
+    );
+
+    mockAxios.onGet("/problem-set").reply(200, mockGetProblemSetsResponse);
+    await waitForPromises();
+
+    const addProblemSetButton = getByTestId("add-problemset-button");
+    const problemSetNumber = getByTestId("problemset-number-textfield");
+    fireEvent.change(problemSetNumber, {
+      target: { value: "10" },
+    });
+    fireEvent.click(addProblemSetButton);
+    mockAxios
+      .onGet("/problem/Agile-easy/countproblem")
+      .reply(200, mockProblemSetCount);
+    await waitForPromises();
+    expect(getByText("1. Agile-easy - 10")).toBeInTheDocument();
+
+    fireEvent.change(problemSetNumber, {
+      target: { value: "10" },
+    });
+    fireEvent.click(addProblemSetButton);
+    mockAxios
+      .onGet("/problem/Agile-medium/countproblem")
+      .reply(200, mockProblemSetCount);
+    await waitForPromises();
+    expect(getByText("2. Agile-medium - 10")).toBeInTheDocument();
+
+    fireEvent.change(problemSetNumber, {
+      target: { value: "10" },
+    });
+    fireEvent.click(addProblemSetButton);
+    expect(getByText("Please select a Problem Set")).toBeInTheDocument();
+    expect(
+      queryByText("Problem set number cannot empty and needs to be > 0")
+    ).not.toBeInTheDocument();
+  });
+
   it("should display error messages when submit without inputs", async () => {
     const { getByTestId, getByText, queryByText } = render(
       <QuizTemplateForm history={mockHistory} />
@@ -126,53 +273,6 @@ describe("Quiz Template Test", () => {
       )
     ).not.toBeInTheDocument();
 
-    const addProblemSetButton = getByTestId("add-problemset-button");
-    fireEvent.click(addProblemSetButton);
-    expect(
-      getByText("Problem set number cannot empty and needs to be > 0")
-    ).toBeInTheDocument();
-
-    const problemSetNumber = getByTestId("problemset-number-textfield");
-    fireEvent.change(problemSetNumber, {
-      target: { value: "30" },
-    });
-    fireEvent.click(addProblemSetButton);
-    mockAxios
-      .onGet("/problem/Agile-easy/countproblem")
-      .reply(200, mockProblemSetCount);
-    await waitForPromises();
-    expect(
-      getByText(
-        "Number of questions should not exceed the maximum number in Problem Set"
-      )
-    ).toBeInTheDocument();
-
-    fireEvent.change(problemSetNumber, {
-      target: { value: "10" },
-    });
-    fireEvent.click(addProblemSetButton);
-    mockAxios
-      .onGet("/problem/Agile-easy/countproblem")
-      .reply(200, mockProblemSetCount);
-    await waitForPromises();
-    expect(
-      queryByText(
-        "Number of questions should not exceed the maximum number in Problem Set"
-      )
-    ).not.toBeInTheDocument();
-    expect(
-      queryByText("Problem set number cannot empty and needs to be > 0")
-    ).not.toBeInTheDocument();
-
-    fireEvent.change(problemSetNumber, {
-      target: { value: "10" },
-    });
-    fireEvent.click(addProblemSetButton);
-    expect(getByText("Please select a Problem Set")).toBeInTheDocument();
-
-    fireEvent.change(quizTemplateCodeTextField, {
-      target: { value: "" },
-    });
     const passingScore = getByTestId("passing-score-textfield");
     fireEvent.change(passingScore, {
       target: { value: "80" },
@@ -183,10 +283,28 @@ describe("Quiz Template Test", () => {
         "Passing score cannot be empty and needs to be >= 1 and <= 100"
       )
     ).not.toBeInTheDocument();
+
+    fireEvent.change(quizTemplateCodeTextField, {
+      target: { value: "" },
+    });
+    const problemSetNumber = getByTestId("problemset-number-textfield");
+    fireEvent.change(problemSetNumber, {
+      target: { value: "10" },
+    });
+    const addProblemSetButton = getByTestId("add-problemset-button");
+    fireEvent.click(addProblemSetButton);
+    mockAxios
+      .onGet("/problem/Agile-easy/countproblem")
+      .reply(200, mockProblemSetCount);
+    await waitForPromises();
+    fireEvent.click(submitButton);
     expect(
       queryByText(
         "Total duration cannot be empty and needs to be >= 1 and <= 180"
       )
+    ).not.toBeInTheDocument();
+    expect(
+      queryByText("Please add at least 1 Problem Sets")
     ).not.toBeInTheDocument();
   }, 200000);
 
@@ -214,6 +332,19 @@ describe("Quiz Template Test", () => {
         /Failed to retrieve problem set. Please refresh page and try again./
       )
     ).toBeInTheDocument();
+  });
+
+  it("should show empty drop down when there is no problem set data", async () => {
+    const { getByTestId, getByText } = render(
+      <QuizTemplateForm history={mockHistory} />
+    );
+
+    mockAxios.onGet("/problem-set").reply(200, []);
+    await waitForPromises();
+
+    const problemSetCodeSelect = getByTestId("problemSetCode-select");
+    fireEvent.mouseDown(problemSetCodeSelect);
+    expect(getByText("None")).toBeInTheDocument();
   });
 
   it("should show error message when saving to Quiz Template encounters network error", async () => {
@@ -250,7 +381,7 @@ describe("Quiz Template Test", () => {
     });
 
     fireEvent.change(totalDuration, {
-      target: { value: "50" },
+      target: { value: "100" },
     });
 
     const submitButton = getByTestId("submit-button");
@@ -313,7 +444,7 @@ describe("Quiz Template Test", () => {
     });
 
     fireEvent.change(totalDuration, {
-      target: { value: "50" },
+      target: { value: "100" },
     });
 
     const submitButton = getByTestId("submit-button");
@@ -533,5 +664,48 @@ describe("Quiz Template Test", () => {
     fireEvent.mouseDown(problemSetCodeSelect);
     expect(getByText("Agile-easy")).toBeInTheDocument();
     expect(queryByText("1. Agile-easy - 10")).not.toBeInTheDocument();
+  });
+
+  it("should successfully save the Quiz template with all correct inputs", async () => {
+    const { getByTestId } = render(
+      <QuizTemplateForm history={mockHistory} username={"qm"} role={"QM"} />
+    );
+
+    mockAxios.onGet("/problem-set").reply(200, mockGetProblemSetsResponse);
+    await waitForPromises();
+
+    const quizTemplateCodeTextField = getByTestId(
+      "quiztemplate-code-textfield"
+    );
+    const problemSetNumber = getByTestId("problemset-number-textfield");
+    const addProblemSetButton = getByTestId("add-problemset-button");
+
+    fireEvent.change(quizTemplateCodeTextField, {
+      target: { value: "Agile-easy-quiz-template2" },
+    });
+
+    fireEvent.change(problemSetNumber, {
+      target: { value: "10" },
+    });
+    fireEvent.click(addProblemSetButton);
+    mockAxios
+      .onGet("/problem/Agile-easy/countproblem")
+      .reply(200, { data: "20" });
+    await waitForPromises();
+
+    const passingScore = getByTestId("passing-score-textfield");
+    fireEvent.change(passingScore, {
+      target: { value: "80" },
+    });
+
+    const submitButton = getByTestId("submit-button");
+
+    fireEvent.click(submitButton);
+    mockAxios
+      .onPost("quiz-template/create")
+      .reply(200, mockCreateQuizTemplateResponse);
+    await waitForPromises();
+
+    expect(mockHistory.push).toHaveBeenCalled();
   });
 });

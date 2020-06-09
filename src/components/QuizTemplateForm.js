@@ -160,7 +160,7 @@ export class QuizTemplateForm extends Component {
         };
 
         this.setState({
-          problemSetCode: "",
+          problemSetCode: this.getNextProblemSetCode(),
           problemSetNumberText: "",
           totalScoreText: this.calculateTotalScore([
             ...this.state.problemSetList,
@@ -180,6 +180,21 @@ export class QuizTemplateForm extends Component {
         });
       }
     }
+  };
+
+  getNextProblemSetCode = () => {
+    for (let problemSet of this.state.problemSets) {
+      if (problemSet.categoryCode !== this.state.problemSetCode) {
+        const foundIndex = this.state.problemSetList.findIndex(
+          (problemSetInList) =>
+            problemSet.categoryCode === problemSetInList.categoryCode
+        );
+        if (foundIndex === -1) {
+          return problemSet.categoryCode;
+        }
+      }
+    }
+    return "";
   };
 
   handleUpdateProblemSetList = (newProblemSetList) => {

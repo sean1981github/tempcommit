@@ -171,7 +171,7 @@ const QuizTemplateFormUI = (props) => {
             label="Enter Total Duration in Mins"
             value={props.totalDurationText}
             variant="outlined"
-            onClick={props.backToPrevPage}
+            onChange={props.handleTotalDurationText}
             helperText={props.errorMessages.totalDurationText}
             type="Number"
           />
