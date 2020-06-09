@@ -376,7 +376,7 @@ export class QuizTemplateForm extends Component {
 
   showQuizTemplateFormUI = () => {
     return (
-      <div>
+      <Fragment>
         <QuizTemplateFormUI
           quizTemplateCode={this.state.quizTemplateCode}
           handleQuizTemplateCode={this.handleQuizTemplateCode}
@@ -404,7 +404,7 @@ export class QuizTemplateForm extends Component {
         ) : (
           <div></div>
         )}
-      </div>
+      </Fragment>
     );
   };
 

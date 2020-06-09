@@ -89,7 +89,7 @@ describe("Quiz Template Test", () => {
   });
 
   it("should display error messages when submit without inputs", async () => {
-    const { getByTestId, getByText, queryByText, findByText } = render(
+    const { getByTestId, getByText, queryByText } = render(
       <QuizTemplateForm history={mockHistory} />
     );
 
@@ -150,7 +150,7 @@ describe("Quiz Template Test", () => {
       .reply(200, mockProblemSetCount);
     await waitForPromises();
     expect(
-      findByText(
+      getByText(
         "Number of questions should not exceed the maximum number in Problem Set"
       )
     ).toBeInTheDocument();

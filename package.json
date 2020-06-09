@@ -27,7 +27,7 @@
     "start:ci": "pm2 --name case start npm -- run start:headless",
     "stop:ci": "pm2 delete case",
     "build": "react-scripts build",
-    "test": "react-scripts test --runInBand",
+    "test": "react-scripts test",
     "test:dev": "react-scripts test --watchAll",
     "testc": "react-scripts test --coverage --watchAll=false --testResultsProcessor ./node_modules/jest-sonar-reporter",
     "eject": "react-scripts eject",
