@@ -76,6 +76,7 @@ export class ProblemConfirmation extends Component {
         <ButtonAppBar
           history={this.props.history}
           setLoggedIn={this.props.setLoggedIn}
+          username={this.props.username}
         />
         {this.showProblemConfirmationUI()}
       </div>

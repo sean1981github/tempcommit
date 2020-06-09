@@ -91,18 +91,6 @@ const Router = () => {
               <Route exact path="/quiz/add" component={QuizForm} />
               <Route
                 exact
-                path="/problem/confirmation"
-                render={(props) => (
-                  <ProblemConfirmation
-                    setLoggedIn={setLoggedIn}
-                    username={username}
-                    role={role}
-                    {...props}
-                  />
-                )}
-              />
-              <Route
-                exact
                 path="/quiz-template/add"
                 render={(props) => (
                   <QuizTemplateForm
