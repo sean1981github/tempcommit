@@ -21,7 +21,13 @@ export class ProblemConfirmation extends Component {
     return problem.options.map((option, index) => {
       const indexToDisplay = index + 1;
       return (
-        <Typography noWrap variant="h6" key={option.id} color="textSecondary">
+        <Typography
+          component="div"
+          noWrap
+          variant="h6"
+          key={option.id}
+          color="textSecondary"
+        >
           {indexToDisplay}. {option.option}
         </Typography>
       );

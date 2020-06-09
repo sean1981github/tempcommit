@@ -7,6 +7,7 @@ const Option = ({ index, option, deleteItem }) => {
     <Grid item xs={12} container justify={"space-between"}>
       <Grid item xs={10} container>
         <Typography
+          component="div"
           noWrap
           variant="h6"
         >{`${index}. ${option.option}`}</Typography>

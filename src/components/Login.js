@@ -29,12 +29,14 @@ const LoginPage = (props) => {
   const classes = useStyles();
   return (
     <Box className={classes.root}>
-      <Typography variant="h6">WELCOME TO CASE</Typography>
-      <Typography variant="h5">
+      <Typography component="div" variant="h6">
+        WELCOME TO CASE
+      </Typography>
+      <Typography component="div" variant="h5">
         (Competency Assessment &amp; Self Evaluation)
       </Typography>
       <form className={classes.form} noValidate autoComplete="off">
-        <Typography>Account sign in</Typography>
+        <Typography component="div">Account sign in</Typography>
 
         <TextField
           required

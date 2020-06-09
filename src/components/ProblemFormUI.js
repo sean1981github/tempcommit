@@ -72,7 +72,9 @@ const ProblemFormUI = (props) => {
     <Container className="problem-page-container" maxWidth={"md"}>
       <Grid container spacing={6} direction="column">
         <Grid justify={"center"} item xs={12} container>
-          <Typography variant="h2">Create New Problem</Typography>
+          <Typography component="div" variant="h2">
+            Create New Problem
+          </Typography>
         </Grid>
 
         <Grid item xs={12} container>
@@ -146,7 +148,9 @@ const ProblemFormUI = (props) => {
             justify={"flex-start"}
             alignItems={"baseline"}
           >
-            <Typography variant="h6">Choose Correct Answer:</Typography>
+            <Typography component="div" variant="h6">
+              Choose Correct Answer:
+            </Typography>
           </Grid>
 
           <Grid
@@ -174,7 +178,9 @@ const ProblemFormUI = (props) => {
             justify={"flex-start"}
             alignItems={"baseline"}
           >
-            <Typography variant="h6">Choose Problem Set:</Typography>
+            <Typography component="div" variant="h6">
+              Choose Problem Set:
+            </Typography>
           </Grid>
           <Grid
             item

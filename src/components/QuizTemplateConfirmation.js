@@ -22,6 +22,7 @@ export class QuizTemplateConfirmation extends Component {
       const indexToDisplay = index + 1;
       return (
         <Typography
+          component="div"
           noWrap
           variant="h6"
           key={problemSet.categoryCode}

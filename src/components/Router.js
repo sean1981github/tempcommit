@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import Login from "./LoginHandle";
 import Loader from "./Spinner";
@@ -30,7 +30,7 @@ const Router = () => {
   }, []);
 
   return (
-    <div>
+    <Fragment>
       {isLoading ? (
         <Loader />
       ) : (
@@ -121,7 +121,7 @@ const Router = () => {
           )}
         </Switch>
       )}
-    </div>
+    </Fragment>
   );
 };
 

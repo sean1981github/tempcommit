@@ -57,12 +57,16 @@ const QuizForm = (props) => {
 
   return (
     <Box className={classes.root}>
-      <Typography variant="h6">Create Quiz</Typography>
+      <Typography component="div" variant="h6">
+        Create Quiz
+      </Typography>
       <form className={classes.form} noValidate autoComplete="off">
         <Grid container justify="center" spacing="5">
           <Grid item xs={12} container className={classes.gridContainer}>
             <Grid item xs={4} container className={classes.gridContainer}>
-              <Typography variant="h6">Candidate Name:</Typography>
+              <Typography component="div" variant="h6">
+                Candidate Name:
+              </Typography>
             </Grid>
             <Grid item xs={8} container className={classes.gridContainer}>
               <TextField
@@ -77,7 +81,9 @@ const QuizForm = (props) => {
           </Grid>
           <Grid item xs={12} container className={classes.gridContainer}>
             <Grid item xs={4} container className={classes.gridContainer}>
-              <Typography variant="h6">Candidate Email:</Typography>
+              <Typography component="div" variant="h6">
+                Candidate Email:
+              </Typography>
             </Grid>
             <Grid item xs={8} container className={classes.gridContainer}>
               <TextField
@@ -92,7 +98,9 @@ const QuizForm = (props) => {
           </Grid>
           <Grid item xs={12} container className={classes.gridContainer}>
             <Grid item xs={4} container className={classes.gridContainer}>
-              <Typography variant="h6">Quiz Template:</Typography>
+              <Typography component="div" variant="h6">
+                Quiz Template:
+              </Typography>
             </Grid>
             <Grid item xs={8} container className={classes.gridContainer}>
               <TextField
@@ -112,7 +120,9 @@ const QuizForm = (props) => {
           </Grid>
           <Grid item xs={12} container className={classes.gridContainer}>
             <Grid item xs={4} container className={classes.gridContainer}>
-              <Typography variant="h6">Quiz Expiry Date:</Typography>
+              <Typography component="div" variant="h6">
+                Quiz Expiry Date:
+              </Typography>
             </Grid>
             <Grid item xs={8} container className={classes.gridContainer}>
               <MuiPickersUtilsProvider utils={DateFnsUtils}>

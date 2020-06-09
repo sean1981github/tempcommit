@@ -20,7 +20,7 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box p={BOX_NUM}>
-          <Typography>{children}</Typography>
+          <Typography component="div">{children}</Typography>
         </Box>
       )}
     </Box>
@@ -46,7 +46,7 @@ const TabPanels = (props) => {
   const value = 0;
 
   const tabGrid = (
-    <Grid container justify="center" spacing="5">
+    <Grid container justify="center" spacing={5}>
       <CardFactory history={props.history} role={props.role} />
     </Grid>
   );
@@ -64,7 +64,7 @@ const TabPanels = (props) => {
         {tabGrid}
       </TabPanel>
       <TabPanel value={value} index={tabIndices.three}>
-        <Typography data-testId="admin-menu-items">
+        <Typography component="div" data-testId="admin-menu-items">
           Placeholder for the menu items of Admin
         </Typography>
       </TabPanel>

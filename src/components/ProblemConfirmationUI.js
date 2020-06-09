@@ -15,10 +15,17 @@ const ProblemConfirmationUI = (props) => {
 
           <Grid justify={"center"} item xs={12} container>
             <Grid justify={"flex-end"} item xs={6} container>
-              <Typography variant="h6">Your problem&nbsp;&nbsp;</Typography>
+              <Typography component="div" variant="h6">
+                Your problem&nbsp;&nbsp;
+              </Typography>
             </Grid>
             <Grid justify={"flex-start"} item xs={6} container>
-              <Typography noWrap variant="h6" color="textSecondary">
+              <Typography
+                component="div"
+                noWrap
+                variant="h6"
+                color="textSecondary"
+              >
                 {props.showQuestion(props.problem)}
               </Typography>
             </Grid>
@@ -26,7 +33,9 @@ const ProblemConfirmationUI = (props) => {
 
           <Grid justify={"center"} item xs={12} container>
             <Grid justify={"flex-end"} item xs={6} container>
-              <Typography variant="h6">With the options&nbsp;&nbsp;</Typography>
+              <Typography component="div" variant="h6">
+                With the options&nbsp;&nbsp;
+              </Typography>
             </Grid>
             <Grid
               alignItems={"flex-start"}
@@ -41,10 +50,17 @@ const ProblemConfirmationUI = (props) => {
 
           <Grid justify={"center"} item xs={12} container>
             <Grid justify={"flex-end"} item xs={6} container>
-              <Typography variant="h6">and answer&nbsp;&nbsp;</Typography>
+              <Typography component="div" variant="h6">
+                and answer&nbsp;&nbsp;
+              </Typography>
             </Grid>
             <Grid justify={"flex-start"} item xs={6} container>
-              <Typography noWrap variant="h6" color="textSecondary">
+              <Typography
+                component="div"
+                noWrap
+                variant="h6"
+                color="textSecondary"
+              >
                 {props.showAnswer(props.problem)}
               </Typography>
             </Grid>
@@ -52,17 +68,24 @@ const ProblemConfirmationUI = (props) => {
 
           <Grid justify={"center"} item xs={12} container>
             <Grid justify={"flex-end"} item xs={6} container>
-              <Typography variant="h6">tagged to&nbsp;&nbsp;</Typography>
+              <Typography component="div" variant="h6">
+                tagged to&nbsp;&nbsp;
+              </Typography>
             </Grid>
             <Grid justify={"flex-start"} item xs={6} container>
-              <Typography noWrap variant="h6" color="textSecondary">
+              <Typography
+                component="div"
+                noWrap
+                variant="h6"
+                color="textSecondary"
+              >
                 {props.showProblemSetCode(props.problem)}
               </Typography>
             </Grid>
           </Grid>
 
           <Grid justify={"center"} item xs={12} container>
-            <Typography variant="h6">
+            <Typography component="div" variant="h6">
               is successfully saved/updated/deleted.
             </Typography>
           </Grid>

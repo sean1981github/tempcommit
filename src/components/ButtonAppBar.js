@@ -56,7 +56,7 @@ const ButtonAppBar = (props) => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography>Welcome, {props.username}!</Typography>
+          <Typography component="div">Welcome, {props.username}!</Typography>
           <Menu
             id="simple-menu"
             anchorEl={anchorEl}
