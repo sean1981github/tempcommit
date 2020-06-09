@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   AppBar,
@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ButtonAppBar = (props) => {
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -56,9 +56,7 @@ const ButtonAppBar = (props) => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography>
-            Welcome, {props.history.location.state.username}!
-          </Typography>
+          <Typography>Welcome, {props.username}!</Typography>
           <Menu
             id="simple-menu"
             anchorEl={anchorEl}

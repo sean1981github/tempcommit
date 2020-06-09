@@ -272,8 +272,8 @@ export class ProblemForm extends Component {
   componentDidMount() {
     this.setState({
       user: {
-        username: this.props.history.location.state.username,
-        role: this.props.history.location.state.role,
+        username: this.props.username,
+        role: this.props.role,
       },
     });
 
@@ -311,6 +311,8 @@ export class ProblemForm extends Component {
         <ButtonAppBar
           history={this.props.history}
           setLoggedIn={this.props.setLoggedIn}
+          username={this.props.username}
+          role={this.props.role}
         />
         {this.showProblemFormUI()}
       </div>

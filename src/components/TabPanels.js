@@ -45,18 +45,17 @@ const TabPanels = (props) => {
 
   const value = 0;
 
+  console.log("inside tabPanel.js :" + props.role);
+
   const tabGrid = (
     <Grid container justify="center" spacing="5">
-      <CardFactory
-        history={props.history}
-        role={props.history.location.state.role}
-      />
+      <CardFactory history={props.history} role={props.role} />
     </Grid>
   );
 
   return (
     <Box component="div" className={classes.root}>
-      <TabBar history={props.history} />
+      <TabBar role={props.role} />
       <TabPanel value={value} index={tabIndices.zero}>
         {tabGrid}
       </TabPanel>

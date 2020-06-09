@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const TabBar = (props) => {
-  const role = props.history.location.state.role;
+  const role = props.role;
   let disableHRFlag = true;
   let disableQMFlag = true;
   let disableAssessorFlag = true;

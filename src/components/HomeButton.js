@@ -15,8 +15,8 @@ const useStyles = makeStyles({
 const HomeButton = (props) => {
   const classes = useStyles();
   const user = {
-    username: props.history.location.state.username,
-    role: props.history.location.state.role,
+    username: props.username,
+    role: props.role,
   };
 
   const handleClick = () => {

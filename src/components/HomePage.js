@@ -6,8 +6,17 @@ import TabPanel from "./TabPanels";
 const HomePage = (props) => {
   return (
     <Box>
-      <ButtonAppBar history={props.history} setLoggedIn={props.setLoggedIn} />
-      <TabPanel history={props.history} setLoggedIn={props.setLoggedIn} />
+      <ButtonAppBar
+        history={props.history}
+        username={props.username}
+        setLoggedIn={props.setLoggedIn}
+      />
+      <TabPanel
+        history={props.history}
+        username={props.username}
+        role={props.role}
+        setLoggedIn={props.setLoggedIn}
+      />
     </Box>
   );
 };

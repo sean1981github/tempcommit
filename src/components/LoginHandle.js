@@ -74,10 +74,11 @@ class LoginHandle extends React.Component {
             });
 
             this.props.setLoggedIn(true);
-            this.props.history.push("/home", {
-              role: res.data.role,
-              username: res.data.username,
-            });
+
+            this.props.setUsername(res.data.username);
+            this.props.setRole(res.data.role);
+
+            this.props.history.push("/home", {});
           } else {
             this.setState({
               isLoading: false,
