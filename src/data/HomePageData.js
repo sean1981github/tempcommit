@@ -27,7 +27,10 @@ const HomePageData = [
         title: "QUIZ TEMPLATE",
         buttons: [
           { title: "Create New Template", path: "/quiz-template/add" },
-          { title: "Edit Existing Template", path: "" },
+          {
+            title: "Edit Existing Template",
+            path: "",
+          },
         ],
       },
     ],

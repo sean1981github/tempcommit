@@ -5,8 +5,6 @@ import {
   Container,
   TextField,
   Typography,
-  FormControl,
-  Select,
   MenuItem,
   FormHelperText,
 } from "@material-ui/core";
@@ -92,18 +90,34 @@ const QuizTemplateFormUI = (props) => {
             {renderProblemSetList()}
           </Grid>
 
-          <TextField
-            inputProps={{ "data-testid": "problemset-number-textfield" }}
-            error={!!props.errorMessages.problemSetNumberText}
-            className="problemset-number-textfield"
-            label="Number"
-            // rows={2}
-            value={props.problemSetNumberText}
-            onChange={props.handleProblemSetNumberText}
-            variant="outlined"
-            helperText={props.errorMessages.problemSetNumberText}
-            type="Number"
-          />
+          <Grid
+            item
+            xs={4}
+            container
+            justify={"flex-start"}
+            alignItems={"baseline"}
+          >
+            <TextField
+              inputProps={{ "data-testid": "problemset-number-textfield" }}
+              error={
+                !!(
+                  props.errorMessages.problemSetNumberText +
+                  props.errorMessages.problemSetQuestionNumberText
+                )
+              }
+              className="problemset-number-textfield"
+              label="Number"
+              // rows={2}
+              value={props.problemSetNumberText}
+              onChange={props.handleProblemSetNumberText}
+              variant="outlined"
+              helperText={
+                props.errorMessages.problemSetNumberText +
+                props.errorMessages.problemSetQuestionNumberText
+              }
+              type="Number"
+            />
+          </Grid>
 
           <Grid
             item
@@ -121,7 +135,7 @@ const QuizTemplateFormUI = (props) => {
               disableElevation={true}
               onClick={props.handleAddNewProblemSet}
             >
-              Add problemSet
+              Add
             </Button>
           </Grid>
         </Grid>

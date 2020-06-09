@@ -5,6 +5,7 @@ import ButtonAppBar from "./ButtonAppBar";
 import QuizTemplateFormUI from "./QuizTemplateFormUI";
 import Option from "./Option";
 import { v4 as uuid } from "uuid";
+import { withRouter } from "react-router-dom";
 const STATUS_OK = 200;
 const MIN_QUIZ_TEMPLATE_CODE_LENGTH = 3;
 const MIN_PROBLEMSETS_COUNT = 1;
@@ -14,10 +15,11 @@ const MIN_TOTAL_DURATION = 1;
 const MAX_TOTAL_DURATION = 180;
 const LINK_TO_CONFIRM_QUIZ_TEMPLATE = "/quiz-template/confirmation";
 
-class QuizTemplateForm extends Component {
+export class QuizTemplateForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      user: {},
       quizTemplateCode: "",
       passingScoreText: "",
       totalScoreText: "",
@@ -34,6 +36,7 @@ class QuizTemplateForm extends Component {
         problemSetCode: "",
         problemSetNumberText: "",
         problemSetList: "",
+        problemSetQuestionNumberText: "",
         api: "",
       },
     };
@@ -61,36 +64,78 @@ class QuizTemplateForm extends Component {
     this.setState({ problemSetNumberText: event.target.value });
   };
 
-  validateNewProblemSet = () => {
+  validateNewProblemSet = async () => {
     this.setState({
       errorMessages: {
         problemSetNumberText: "",
+        problemSetQuestionNumberText: "",
       },
     });
+
     const problemSetNumberText = this.state.problemSetNumberText;
     const problemSetCode = this.state.problemSetCode;
     const invalidProblemSetNumberText =
-      !problemSetNumberText || problemSetNumberText < 0;
+      !problemSetNumberText || problemSetNumberText <= 0;
     const invalidProblemSetCode = !problemSetCode;
 
-    if (invalidProblemSetNumberText) {
+    if (invalidProblemSetNumberText || invalidProblemSetCode) {
       this.setState({
         errorMessages: {
           ...this.state.errorMessages,
-          problemSetNumberText:
-            "Problem set number cannot empty and needs to be > 0",
-          // totalDurationText: invalidProblemSetNumberText
-          //   ? `Total duration cannot be empty and needs to be >=  ${MIN_TOTAL_DURATION} and <=  ${MAX_TOTAL_DURATION}`
-          //   : "",
+          problemSetNumberText: invalidProblemSetNumberText
+            ? "Problem set number cannot empty and needs to be > 0"
+            : "",
+          problemSetCode: invalidProblemSetCode
+            ? "Please select a Problem Set"
+            : "",
         },
       });
       return false;
+    } else {
+      let problemCount = 0;
+      await Axios.get(`problem/${problemSetCode}/countproblem`)
+        .then((res) => {
+          if (res.status === STATUS_OK && res.data) {
+            problemCount = res.data;
+          } else {
+            this.setState({
+              isLoading: false,
+              errorMessages: {
+                ...this.state.errorMessages,
+                api:
+                  "Failed to retrieve problem count. Please refresh page and try again.",
+              },
+            });
+          }
+        })
+        .catch((error) => {
+          this.setState({
+            isLoading: false,
+            apiError: error,
+            errorMessages: {
+              ...this.state.errorMessages,
+              api:
+                "Failed to retrieve problem count. Please refresh page and try again.",
+            },
+          });
+        });
+      if (parseInt(problemCount) < parseInt(problemSetNumberText)) {
+        this.setState({
+          errorMessages: {
+            ...this.state.errorMessages,
+            problemSetQuestionNumberText:
+              "Number of questions should not exceed the maximum number in Problem Set",
+          },
+        });
+        return false;
+      } else {
+        return true;
+      }
     }
-    return true;
   };
 
-  handleAddNewProblemSet = () => {
-    if (this.validateNewProblemSet() === false) {
+  handleAddNewProblemSet = async () => {
+    if ((await this.validateNewProblemSet()) === false) {
       return;
     } else {
       const newProblemSet = {
@@ -100,6 +145,7 @@ class QuizTemplateForm extends Component {
       };
 
       this.setState({
+        problemSetCode: "",
         problemSetNumberText: "",
         totalScoreText: this.calculateTotalScore([
           ...this.state.problemSetList,
@@ -112,7 +158,9 @@ class QuizTemplateForm extends Component {
         problemSetList: [...this.state.problemSetList, newProblemSet],
         errorMessages: {
           ...this.state.errorMessages,
+          problemSetCode: "",
           problemSetNumberText: "",
+          problemSetQuestionNumberText: "",
         },
       });
     }
@@ -164,6 +212,8 @@ class QuizTemplateForm extends Component {
         passingScoreText: "",
         totalDurationText: "",
         problemSetList: "",
+        problemSetNumberText: "",
+        problemSetQuestionNumberText: "",
       },
     });
 
@@ -205,12 +255,10 @@ class QuizTemplateForm extends Component {
       });
       return false;
     }
-
     return true;
   };
 
   submit = () => {
-    console.log(this.state);
     if (this.validateForm() === false) {
       return;
     } else {
@@ -243,18 +291,23 @@ class QuizTemplateForm extends Component {
               errorMessages: {
                 ...this.state.errorMessages,
                 api:
-                  "Failed to add problem. Something is wrong, please try again later.",
+                  "Failed to add quiz template. Something is wrong, please try again later.",
               },
             });
           }
         })
         .catch((error) => {
+          let errMsg =
+            "Failed to add quiz template. Something is wrong, please try again later.";
+          if (JSON.stringify(error.response.data).includes("E11000")) {
+            errMsg =
+              "Quiz Template Code already exists. Please enter another Template Code.";
+          }
           this.setState({
             isLoading: false,
             errorMessages: {
               ...this.state.errorMessages,
-              api:
-                "Failed to add problem. Something is wrong, please try again later.",
+              api: errMsg,
             },
           });
         });
@@ -285,10 +338,8 @@ class QuizTemplateForm extends Component {
         (problemSet) =>
           selectedProblemSet.categoryCode === problemSet.categoryCode
       );
-      if (!!foundproblemSet) {
-        totalScore +=
-          foundproblemSet.score * selectedProblemSet.numberOfQuestions;
-      }
+      totalScore +=
+        foundproblemSet.score * selectedProblemSet.numberOfQuestions;
     });
     return totalScore;
   };
@@ -301,10 +352,8 @@ class QuizTemplateForm extends Component {
         (problemSet) =>
           selectedProblemSet.categoryCode === problemSet.categoryCode
       );
-      if (!!foundproblemSet) {
-        totalDuration +=
-          foundproblemSet.durationInMins * selectedProblemSet.numberOfQuestions;
-      }
+      totalDuration +=
+        foundproblemSet.durationInMins * selectedProblemSet.numberOfQuestions;
     });
     return totalDuration;
   };
@@ -313,7 +362,7 @@ class QuizTemplateForm extends Component {
     return (
       <Fragment>
         <QuizTemplateFormUI
-          questionText={this.state.questionText}
+          quizTemplateCode={this.state.quizTemplateCode}
           handleQuizTemplateCode={this.handleQuizTemplateCode}
           passingScoreText={this.state.passingScoreText}
           handlePassingScoreText={this.handlePassingScoreText}
@@ -344,6 +393,13 @@ class QuizTemplateForm extends Component {
   };
 
   componentDidMount() {
+    this.setState({
+      user: {
+        username: this.props.history.location.state.username,
+        role: this.props.history.location.state.role,
+      },
+    });
+
     Axios.get("problem-set")
       .then((res) => {
         if (res.status === STATUS_OK && res.data) {
@@ -385,4 +441,4 @@ class QuizTemplateForm extends Component {
   }
 }
 
-export default QuizTemplateForm;
+export default withRouter(QuizTemplateForm);

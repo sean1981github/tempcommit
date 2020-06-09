@@ -28,7 +28,7 @@ export class QuizTemplateConfirmation extends Component {
           color="textSecondary"
         >
           {indexToDisplay}.{" "}
-          {`${problemSet.categoryCode} (${problemSet.noOfQuestions} questions)`}
+          {`${problemSet.categoryCode} (${problemSet.numberOfQuestions} questions)`}
         </Typography>
       );
     });
