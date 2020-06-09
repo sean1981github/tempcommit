@@ -227,7 +227,6 @@ describe("Quiz Template Test", () => {
     const quizTemplateCodeTextField = getByTestId(
       "quiztemplate-code-textfield"
     );
-    const problemSetCodeSelect = getByTestId("problemSetCode-select");
     const problemSetNumber = getByTestId("problemset-number-textfield");
     const addProblemSetButton = getByTestId("add-problemset-button");
     const passingScore = getByTestId("passing-score-textfield");
@@ -291,7 +290,6 @@ describe("Quiz Template Test", () => {
     const quizTemplateCodeTextField = getByTestId(
       "quiztemplate-code-textfield"
     );
-    const problemSetCodeSelect = getByTestId("problemSetCode-select");
     const problemSetNumber = getByTestId("problemset-number-textfield");
     const addProblemSetButton = getByTestId("add-problemset-button");
     const passingScore = getByTestId("passing-score-textfield");
@@ -342,7 +340,6 @@ describe("Quiz Template Test", () => {
     const quizTemplateCodeTextField = getByTestId(
       "quiztemplate-code-textfield"
     );
-    const problemSetCodeSelect = getByTestId("problemSetCode-select");
     const problemSetNumber = getByTestId("problemset-number-textfield");
     const addProblemSetButton = getByTestId("add-problemset-button");
     const passingScore = getByTestId("passing-score-textfield");
@@ -393,7 +390,6 @@ describe("Quiz Template Test", () => {
     const quizTemplateCodeTextField = getByTestId(
       "quiztemplate-code-textfield"
     );
-    const problemSetCodeSelect = getByTestId("problemSetCode-select");
     const problemSetNumber = getByTestId("problemset-number-textfield");
     const addProblemSetButton = getByTestId("add-problemset-button");
     const passingScore = getByTestId("passing-score-textfield");
@@ -444,7 +440,6 @@ describe("Quiz Template Test", () => {
     const quizTemplateCodeTextField = getByTestId(
       "quiztemplate-code-textfield"
     );
-    const problemSetCodeSelect = getByTestId("problemSetCode-select");
     const problemSetNumber = getByTestId("problemset-number-textfield");
     const addProblemSetButton = getByTestId("add-problemset-button");
 
@@ -479,7 +474,6 @@ describe("Quiz Template Test", () => {
     const quizTemplateCodeTextField = getByTestId(
       "quiztemplate-code-textfield"
     );
-    const problemSetCodeSelect = getByTestId("problemSetCode-select");
     const problemSetNumber = getByTestId("problemset-number-textfield");
     const addProblemSetButton = getByTestId("add-problemset-button");
 
