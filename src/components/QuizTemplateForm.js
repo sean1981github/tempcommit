@@ -64,9 +64,10 @@ export class QuizTemplateForm extends Component {
     this.setState({ problemSetNumberText: event.target.value });
   };
 
-  validateNewProblemSet = () => {
+  validateNewProblemSetInput = () => {
     this.setState({
       errorMessages: {
+        problemSetCode: "",
         problemSetNumberText: "",
       },
     });
@@ -80,11 +81,13 @@ export class QuizTemplateForm extends Component {
       this.setState({
         errorMessages: {
           ...this.state.errorMessages,
-          problemSetNumberText:
-            "Problem set number cannot empty and needs to be > 0",
-          // totalDurationText: invalidProblemSetNumberText
-          //   ? `Total duration cannot be empty and needs to be >=  ${MIN_TOTAL_DURATION} and <=  ${MAX_TOTAL_DURATION}`
-          //   : "",
+          problemSetNumberText: invalidProblemSetNumberText
+            ? "Problem set number cannot empty and needs to be > 0"
+            : "",
+          problemSetCode: invalidProblemSetCode
+            ? "Please select a Problem Set"
+            : "",
+          problemSetQuestionNumberText: "",
         },
       });
       return false;
@@ -92,35 +95,90 @@ export class QuizTemplateForm extends Component {
     return true;
   };
 
-  handleAddNewProblemSet = () => {
-    if (this.validateNewProblemSet() === false) {
-      return;
-    } else {
-      const newProblemSet = {
-        categoryCode: this.state.problemSetCode,
-        numberOfQuestions: this.state.problemSetNumberText,
-        option: `${this.state.problemSetCode} - ${this.state.problemSetNumberText}`,
-      };
+  validateNewProblemSetCount = async () => {
+    const problemSetNumberText = this.state.problemSetNumberText;
+    const problemSetCode = this.state.problemSetCode;
 
-      this.setState({
-        problemSetCode: "",
+    this.setState({
+      errorMessages: {
         problemSetNumberText: "",
-        totalScoreText: this.calculateTotalScore([
-          ...this.state.problemSetList,
-          newProblemSet,
-        ]),
-        totalDurationText: this.calculateTotalDuration([
-          ...this.state.problemSetList,
-          newProblemSet,
-        ]),
-        problemSetList: [...this.state.problemSetList, newProblemSet],
+        problemSetQuestionNumberText: "",
+      },
+    });
+
+    let problemCount = 0;
+    await Axios.get(`problem/${problemSetCode}/countproblem`)
+      .then((res) => {
+        if (res.status === STATUS_OK && res.data) {
+          problemCount = res.data;
+        } else {
+          this.setState({
+            isLoading: false,
+            errorMessages: {
+              ...this.state.errorMessages,
+              api:
+                "Failed to retrieve problem count. Please refresh page and try again.",
+            },
+          });
+        }
+      })
+      .catch((error) => {
+        this.setState({
+          isLoading: false,
+          apiError: error,
+          errorMessages: {
+            ...this.state.errorMessages,
+            api:
+              "Failed to retrieve problem count. Please refresh page and try again.",
+          },
+        });
+      });
+    if (parseInt(problemCount, 10) < parseInt(problemSetNumberText, 10)) {
+      this.setState({
         errorMessages: {
           ...this.state.errorMessages,
-          problemSetCode: "",
-          problemSetNumberText: "",
-          problemSetQuestionNumberText: "",
+          problemSetQuestionNumberText:
+            "Number of questions should not exceed the maximum number in Problem Set",
         },
       });
+      return false;
+    }
+    return true;
+  };
+
+  handleAddNewProblemSet = async () => {
+    if (this.validateNewProblemSetInput() === false) {
+      return;
+    } else {
+      if ((await this.validateNewProblemSetCount()) === false) {
+        return;
+      } else {
+        const newProblemSet = {
+          categoryCode: this.state.problemSetCode,
+          numberOfQuestions: this.state.problemSetNumberText,
+          option: `${this.state.problemSetCode} - ${this.state.problemSetNumberText}`,
+        };
+
+        this.setState({
+          problemSetCode: "",
+          problemSetNumberText: "",
+          totalScoreText: this.calculateTotalScore([
+            ...this.state.problemSetList,
+            newProblemSet,
+          ]),
+          totalDurationText: this.calculateTotalDuration([
+            ...this.state.problemSetList,
+            newProblemSet,
+          ]),
+          problemSetList: [...this.state.problemSetList, newProblemSet],
+          errorMessages: {
+            ...this.state.errorMessages,
+            problemSetCode: "",
+            problemSetNumberText: "",
+            problemSetQuestionNumberText: "",
+          },
+        });
+      }
     }
   };
 
@@ -318,7 +376,7 @@ export class QuizTemplateForm extends Component {
 
   showQuizTemplateFormUI = () => {
     return (
-      <Fragment>
+      <div>
         <QuizTemplateFormUI
           quizTemplateCode={this.state.quizTemplateCode}
           handleQuizTemplateCode={this.handleQuizTemplateCode}
@@ -346,7 +404,7 @@ export class QuizTemplateForm extends Component {
         ) : (
           <div></div>
         )}
-      </Fragment>
+      </div>
     );
   };
 

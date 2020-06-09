@@ -65,7 +65,6 @@ const QuizTemplateFormUI = (props) => {
             error={!!props.errorMessages.quizTemplateCode}
             className="quiztemplate-code-textfield"
             label="Enter Quiz Template Code"
-            rows={2}
             value={props.quizTemplateCode}
             onChange={props.handleQuizTemplateCode}
             variant="outlined"
@@ -107,7 +106,6 @@ const QuizTemplateFormUI = (props) => {
               }
               className="problemset-number-textfield"
               label="Number"
-              // rows={2}
               value={props.problemSetNumberText}
               onChange={props.handleProblemSetNumberText}
               variant="outlined"
