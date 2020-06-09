@@ -7,9 +7,6 @@ import ProblemConfirmation from "./ProblemConfirmation";
 import QuizForm from "./QuizForm";
 import QuizTemplateForm from "./QuizTemplateForm";
 import QuizTemplateConfirmation from "./QuizTemplateConfirmation";
-import QuizForm from "./QuizForm";
-import QuizTemplateForm from "./QuizTemplateForm";
-import QuizTemplateConfirmation from "./QuizTemplateConfirmation";
 
 const Router = () => {
   const [isLoggedIn, setLoggedIn] = useState(false);

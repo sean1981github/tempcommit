@@ -122,10 +122,6 @@ describe("Quiz Template Creation Confirmation Test", () => {
       target: { value: "Agile-easy-quiz-template2" },
     });
 
-    fireEvent.mouseDown(problemSetCodeSelect);
-    const problemSetAgileEasy = getByText("Agile-easy");
-    fireEvent.click(problemSetAgileEasy);
-
     fireEvent.change(problemSetNumber, {
       target: { value: "10" },
     });

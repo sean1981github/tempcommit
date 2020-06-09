@@ -28,9 +28,11 @@ const QuizTemplateFormUI = (props) => {
           },
         }}
       >
-        <MenuItem>
-          <em>None</em>
-        </MenuItem>
+        {props.problemSets.length === 0 && (
+          <MenuItem>
+            <em>None</em>
+          </MenuItem>
+        )}
         {props.problemSets.map((problemSet) => {
           return (
             <MenuItem value={problemSet.categoryCode} key={problemSet.id}>
@@ -105,7 +107,7 @@ const QuizTemplateFormUI = (props) => {
                 )
               }
               className="problemset-number-textfield"
-              label="Number"
+              label="Number of Questions"
               value={props.problemSetNumberText}
               onChange={props.handleProblemSetNumberText}
               variant="outlined"

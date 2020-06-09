@@ -128,17 +128,9 @@ describe("Quiz Template Test", () => {
 
     const addProblemSetButton = getByTestId("add-problemset-button");
     fireEvent.click(addProblemSetButton);
-    expect(getByText("Please select a Problem Set")).toBeInTheDocument();
     expect(
       getByText("Problem set number cannot empty and needs to be > 0")
     ).toBeInTheDocument();
-
-    const problemSetCodeSelect = getByTestId("problemSetCode-select");
-    fireEvent.mouseDown(problemSetCodeSelect);
-    const problemSetAgileEasy = getByText("Agile-easy");
-    fireEvent.click(problemSetAgileEasy);
-    fireEvent.click(addProblemSetButton);
-    expect(queryByText("Please select a Problem Set")).not.toBeInTheDocument();
 
     const problemSetNumber = getByTestId("problemset-number-textfield");
     fireEvent.change(problemSetNumber, {
@@ -177,9 +169,6 @@ describe("Quiz Template Test", () => {
     });
     fireEvent.click(addProblemSetButton);
     expect(getByText("Please select a Problem Set")).toBeInTheDocument();
-    expect(
-      queryByText("Problem set number cannot empty and needs to be > 0")
-    ).not.toBeInTheDocument();
 
     fireEvent.change(quizTemplateCodeTextField, {
       target: { value: "" },
@@ -248,10 +237,6 @@ describe("Quiz Template Test", () => {
       target: { value: "Agile-easy-quiz-template2" },
     });
 
-    fireEvent.mouseDown(problemSetCodeSelect);
-    const problemSetAgileEasy = getByText("Agile-easy");
-    fireEvent.click(problemSetAgileEasy);
-
     fireEvent.change(problemSetNumber, {
       target: { value: "10" },
     });
@@ -316,10 +301,6 @@ describe("Quiz Template Test", () => {
       target: { value: "Agile-easy-quiz-template2" },
     });
 
-    fireEvent.mouseDown(problemSetCodeSelect);
-    const problemSetAgileEasy = getByText("Agile-easy");
-    fireEvent.click(problemSetAgileEasy);
-
     fireEvent.change(problemSetNumber, {
       target: { value: "10" },
     });
@@ -370,10 +351,6 @@ describe("Quiz Template Test", () => {
     fireEvent.change(quizTemplateCodeTextField, {
       target: { value: "Agile-easy-quiz-template2" },
     });
-
-    fireEvent.mouseDown(problemSetCodeSelect);
-    const problemSetAgileEasy = getByText("Agile-easy");
-    fireEvent.click(problemSetAgileEasy);
 
     fireEvent.change(problemSetNumber, {
       target: { value: "10" },
@@ -426,10 +403,6 @@ describe("Quiz Template Test", () => {
       target: { value: "Agile-easy-quiz-template2" },
     });
 
-    fireEvent.mouseDown(problemSetCodeSelect);
-    const problemSetAgileEasy = getByText("Agile-easy");
-    fireEvent.click(problemSetAgileEasy);
-
     fireEvent.change(problemSetNumber, {
       target: { value: "10" },
     });
@@ -479,10 +452,6 @@ describe("Quiz Template Test", () => {
       target: { value: "Agile-easy-quiz-template2" },
     });
 
-    fireEvent.mouseDown(problemSetCodeSelect);
-    const problemSetAgileEasy = getByText("Agile-easy");
-    fireEvent.click(problemSetAgileEasy);
-
     fireEvent.change(problemSetNumber, {
       target: { value: "10" },
     });
@@ -518,10 +487,6 @@ describe("Quiz Template Test", () => {
       target: { value: "Agile-easy-quiz-template2" },
     });
 
-    fireEvent.mouseDown(problemSetCodeSelect);
-    const problemSetAgileEasy = getByText("Agile-easy");
-    fireEvent.click(problemSetAgileEasy);
-
     fireEvent.change(problemSetNumber, {
       target: { value: "10" },
     });
@@ -556,10 +521,6 @@ describe("Quiz Template Test", () => {
     fireEvent.change(quizTemplateCodeTextField, {
       target: { value: "Agile-easy-quiz-template2" },
     });
-
-    fireEvent.mouseDown(problemSetCodeSelect);
-    const problemSetAgileEasy = getByText("Agile-easy");
-    fireEvent.click(problemSetAgileEasy);
 
     fireEvent.change(problemSetNumber, {
       target: { value: "10" },

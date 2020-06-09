@@ -77,7 +77,7 @@ export class QuizTemplateForm extends Component {
       !problemSetNumberText || problemSetNumberText < 0;
     const invalidProblemSetCode = !problemSetCode;
 
-    if (invalidProblemSetNumberText) {
+    if (invalidProblemSetCode || invalidProblemSetNumberText) {
       this.setState({
         errorMessages: {
           ...this.state.errorMessages,
@@ -419,7 +419,10 @@ export class QuizTemplateForm extends Component {
     Axios.get("problem-set")
       .then((res) => {
         if (res.status === STATUS_OK && res.data) {
-          this.setState({ problemSets: res.data });
+          this.setState({
+            problemSets: res.data,
+            problemSetCode: res.data.length ? res.data[0].categoryCode : null,
+          });
         } else {
           this.setState({
             isLoading: false,
