@@ -217,21 +217,11 @@ export class QuizTemplateForm extends Component {
     });
   };
 
-  validateForm = () => {
+  getQuizValidity = () => {
     const quizTemplateCode = this.state.quizTemplateCode;
     const passingScoreText = this.state.passingScoreText;
     const totalDurationText = this.state.totalDurationText;
     const problemSetList = this.state.problemSetList;
-    this.setState({
-      errorMessages: {
-        quizTemplateCode: "",
-        passingScoreText: "",
-        totalDurationText: "",
-        problemSetList: "",
-        problemSetNumberText: "",
-        problemSetQuestionNumberText: "",
-      },
-    });
 
     const invalidQuizTemplateCode =
       !quizTemplateCode ||
@@ -246,12 +236,41 @@ export class QuizTemplateForm extends Component {
       totalDurationText > MAX_TOTAL_DURATION;
     const invalidProblemSetList = problemSetList.length < MIN_PROBLEMSETS_COUNT;
 
-    if (
+    const isQuizInvalid =
       invalidQuizTemplateCode ||
       invalidpassingScoreText ||
       invalidtotalDurationText ||
-      invalidProblemSetList
-    ) {
+      invalidProblemSetList;
+
+    return {
+      isQuizInvalid,
+      invalidQuizTemplateCode,
+      invalidpassingScoreText,
+      invalidtotalDurationText,
+      invalidProblemSetList,
+    };
+  };
+
+  validateForm = () => {
+    this.setState({
+      errorMessages: {
+        quizTemplateCode: "",
+        passingScoreText: "",
+        totalDurationText: "",
+        problemSetList: "",
+        problemSetNumberText: "",
+        problemSetQuestionNumberText: "",
+      },
+    });
+
+    const {
+      isQuizInvalid,
+      invalidQuizTemplateCode,
+      invalidpassingScoreText,
+      invalidtotalDurationText,
+      invalidProblemSetList,
+    } = this.getQuizValidity();
+    if (isQuizInvalid) {
       this.setState({
         errorMessages: {
           ...this.state.errorMessages,

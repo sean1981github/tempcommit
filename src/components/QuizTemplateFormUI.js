@@ -8,6 +8,7 @@ import {
   MenuItem,
   FormHelperText,
 } from "@material-ui/core";
+import { QuizTemplateGrid } from "./customGrids";
 const PARENT_PAGE_LINK = "/login";
 
 const QuizTemplateFormUI = (props) => {
@@ -52,16 +53,9 @@ const QuizTemplateFormUI = (props) => {
         </Grid>
 
         <Grid item xs={12} container>
-          <Grid
-            item
-            xs={4}
-            container
-            direction={"row"}
-            justify={"flex-start"}
-            alignItems={"center"}
-          >
+          <QuizTemplateGrid>
             <Typography variant="h6">Quiz Template Code:</Typography>
-          </Grid>
+          </QuizTemplateGrid>
           <TextField
             inputProps={{ "data-testid": "quiztemplate-code-textfield" }}
             error={!!props.errorMessages.quizTemplateCode}
@@ -81,23 +75,9 @@ const QuizTemplateFormUI = (props) => {
           justify={"flex-start"}
           alignItems={"baseline"}
         >
-          <Grid
-            item
-            xs={4}
-            container
-            justify={"flex-start"}
-            alignItems={"baseline"}
-          >
-            {renderProblemSetList()}
-          </Grid>
+          <QuizTemplateGrid>{renderProblemSetList()}</QuizTemplateGrid>
 
-          <Grid
-            item
-            xs={4}
-            container
-            justify={"flex-start"}
-            alignItems={"baseline"}
-          >
+          <QuizTemplateGrid>
             <TextField
               inputProps={{ "data-testid": "problemset-number-textfield" }}
               error={
@@ -117,7 +97,7 @@ const QuizTemplateFormUI = (props) => {
               }
               type="Number"
             />
-          </Grid>
+          </QuizTemplateGrid>
 
           <Grid
             item
@@ -148,16 +128,9 @@ const QuizTemplateFormUI = (props) => {
         </Grid>
 
         <Grid item xs={12} container>
-          <Grid
-            item
-            xs={4}
-            container
-            direction={"row"}
-            justify={"flex-start"}
-            alignItems={"center"}
-          >
+          <QuizTemplateGrid>
             <Typography variant="h6">Passing Score %:</Typography>
-          </Grid>
+          </QuizTemplateGrid>
           <TextField
             inputProps={{ "data-testid": "passing-score-textfield" }}
             error={!!props.errorMessages.passingScoreText}
@@ -172,16 +145,9 @@ const QuizTemplateFormUI = (props) => {
         </Grid>
 
         <Grid item xs={12} container>
-          <Grid
-            item
-            xs={4}
-            container
-            direction={"row"}
-            justify={"flex-start"}
-            alignItems={"center"}
-          >
+          <QuizTemplateGrid>
             <Typography variant="h6">Total Score:</Typography>
-          </Grid>
+          </QuizTemplateGrid>
           <TextField
             inputProps={{ "data-testid": "total-score-textfield" }}
             className="total-score-textfield"
@@ -193,16 +159,9 @@ const QuizTemplateFormUI = (props) => {
         </Grid>
 
         <Grid item xs={12} container>
-          <Grid
-            item
-            xs={4}
-            container
-            direction={"row"}
-            justify={"flex-start"}
-            alignItems={"center"}
-          >
+          <QuizTemplateGrid>
             <Typography variant="h6">Total Duration (Mins):</Typography>
-          </Grid>
+          </QuizTemplateGrid>
           <TextField
             inputProps={{ "data-testid": "total-duration-textfield" }}
             error={!!props.errorMessages.totalDurationText}
