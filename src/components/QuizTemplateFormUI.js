@@ -9,7 +9,7 @@ import {
   FormHelperText,
 } from "@material-ui/core";
 import { QuizTemplateGrid } from "./customGrids";
-const PARENT_PAGE_LINK = "/login";
+const PARENT_PAGE_LINK = "/home";
 
 const QuizTemplateFormUI = (props) => {
   const renderProblemSetList = () => {
@@ -170,8 +170,8 @@ const QuizTemplateFormUI = (props) => {
             className="total-duration-textfield"
             label="Enter Total Duration in Mins"
             value={props.totalDurationText}
-            onChange={props.handleTotalDurationText}
             variant="outlined"
+            onClick={props.backToPrevPage}
             helperText={props.errorMessages.totalDurationText}
             type="Number"
           />

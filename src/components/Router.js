@@ -80,7 +80,12 @@ const Router = () => {
                 exact
                 path="/problem/confirmation"
                 render={(props) => (
-                  <ProblemConfirmation setLoggedIn={setLoggedIn} {...props} />
+                  <ProblemConfirmation
+                    setLoggedIn={setLoggedIn}
+                    username={username}
+                    role={role}
+                    {...props}
+                  />
                 )}
               />
               <Route exact path="/quiz/add" component={QuizForm} />
@@ -88,14 +93,24 @@ const Router = () => {
                 exact
                 path="/problem/confirmation"
                 render={(props) => (
-                  <ProblemConfirmation setLoggedIn={setLoggedIn} {...props} />
+                  <ProblemConfirmation
+                    setLoggedIn={setLoggedIn}
+                    username={username}
+                    role={role}
+                    {...props}
+                  />
                 )}
               />
               <Route
                 exact
                 path="/quiz-template/add"
                 render={(props) => (
-                  <QuizTemplateForm setLoggedIn={setLoggedIn} {...props} />
+                  <QuizTemplateForm
+                    setLoggedIn={setLoggedIn}
+                    username={username}
+                    role={role}
+                    {...props}
+                  />
                 )}
               />
               <Route
@@ -104,6 +119,8 @@ const Router = () => {
                 render={(props) => (
                   <QuizTemplateConfirmation
                     setLoggedIn={setLoggedIn}
+                    username={username}
+                    role={role}
                     {...props}
                   />
                 )}

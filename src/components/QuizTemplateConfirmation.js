@@ -49,8 +49,8 @@ export class QuizTemplateConfirmation extends Component {
 
   redirectHomePage = () => {
     const user = {
-      username: this.props.history.location.state.username,
-      role: this.props.history.location.state.role,
+      username: this.props.username,
+      role: this.props.role,
     };
 
     this.props.history.push({
@@ -81,6 +81,7 @@ export class QuizTemplateConfirmation extends Component {
         <ButtonAppBar
           history={this.props.history}
           setLoggedIn={this.props.setLoggedIn}
+          username={this.props.username}
         />
         {this.showQuizTemplateConfirmationUI()}
       </div>
