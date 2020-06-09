@@ -45,8 +45,6 @@ const TabPanels = (props) => {
 
   const value = 0;
 
-  console.log("inside tabPanel.js :" + props.role);
-
   const tabGrid = (
     <Grid container justify="center" spacing="5">
       <CardFactory history={props.history} role={props.role} />

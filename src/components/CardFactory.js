@@ -4,7 +4,6 @@ import { Grid } from "@material-ui/core";
 import homepageData from "../data/HomePageData";
 
 const CardFactory = (props) => {
-  console.log("inside card factory :" + props.role);
   const cardInfo = homepageData.filter((data) => data.role === props.role);
 
   return cardInfo[0].cards.map((card) => {
