@@ -2,7 +2,7 @@ import React from "react";
 import MockAdapter from "axios-mock-adapter";
 import "@testing-library/jest-dom/extend-expect";
 import { render, fireEvent, waitForElement } from "@testing-library/react";
-import App from "../App";
+
 import LoginPage from "./LoginHandle";
 import Axios from "../utils/axiosInstance";
 
@@ -141,7 +141,7 @@ describe("LoginPage", () => {
     const setUsername = jest.fn();
     const setRole = jest.fn();
     const push = jest.fn();
-    const { getByTestId, getByText, getByLabelText } = render(
+    const { getByTestId } = render(
       <LoginPage
         history={{ push: push }}
         location={{ state: { message: "" } }}

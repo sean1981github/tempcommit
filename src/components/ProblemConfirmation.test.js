@@ -1,8 +1,7 @@
 import React from "react";
 import "@testing-library/jest-dom/extend-expect";
-import { render, fireEvent, waitForElement } from "@testing-library/react";
+import { render, fireEvent } from "@testing-library/react";
 import { ProblemConfirmation } from "./ProblemConfirmation";
-import App from "../App";
 import Axios from "../utils/axiosInstance";
 import MockAdapter from "axios-mock-adapter";
 
@@ -36,39 +35,7 @@ const mockLocation = {
   },
 };
 
-const mockGetProblemSetsResponse = [
-  {
-    categoryCode: "Agile-Medium",
-    score: 5,
-    durationInMins: 5,
-  },
-  {
-    categoryCode: "Agile-Medium-Rare",
-    score: 5,
-    durationInMins: 5,
-  },
-];
-
-const mockCreateProblemResponse = {
-  question: "Test Question",
-  options: [
-    {
-      option: "First Option",
-      id: "82792c1a-4ec4-4b38-9b8d-c853c8b602f5",
-    },
-    {
-      option: "Second Option",
-      id: "95ff8632-a8fc-4463-a047-b85cafa38f79",
-    },
-  ],
-  answer: "82792c1a-4ec4-4b38-9b8d-c853c8b602f5",
-  problemSetCode: "Agile-Medium",
-  id: "71dbb9b1-a1a3-48ca-a79b-2920128cf158",
-};
-
 describe("Problem Creation Confirmation Test", () => {
-  const waitForPromises = () => new Promise((resolve) => setTimeout(resolve));
-
   beforeEach(() => {
     mockAxios.reset();
   });
