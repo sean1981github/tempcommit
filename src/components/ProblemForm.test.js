@@ -455,34 +455,4 @@ describe("Problem Form Test", () => {
 
     expect(mockHistory.goBack).toHaveBeenCalled();
   });
-
-  it("full login -> creat problem -> logout flow", async () => {
-    const { getByTestId, getByText } = render(<App />);
-    const username = getByTestId("username");
-    const password = getByTestId("password");
-    const signinButton = getByTestId("signin");
-
-    fireEvent.change(username, {
-      target: { value: "username" },
-    });
-    fireEvent.change(password, {
-      target: { value: "password" },
-    });
-    fireEvent.click(signinButton);
-    mockAxios.onPost("/users/login").reply(200, { role: "QM", username: "qm" });
-
-    await waitForElement(() => getByTestId("Create New Problem"));
-
-    const createProblemButton = getByTestId("Create New Problem");
-    fireEvent.click(createProblemButton);
-
-    await waitForElement(() => getByText("Create New Problem"));
-
-    const logoutButton = getByTestId("logoutButton");
-    fireEvent.click(logoutButton);
-    mockAxios.onPost("/users/logout").reply(200);
-
-    expect(getByText("You have logged out")).toBeInTheDocument();
-    expect(getByTestId("username")).toBeInTheDocument();
-  });
 });
