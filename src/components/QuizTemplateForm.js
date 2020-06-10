@@ -183,14 +183,14 @@ export class QuizTemplateForm extends Component {
   };
 
   getNextProblemSetCode = () => {
-    for (const problemSet of this.state.problemSets) {
-      if (problemSet.categoryCode !== this.state.problemSetCode) {
+    for (const aProblemSet of this.state.problemSets) {
+      if (aProblemSet.categoryCode !== this.state.problemSetCode) {
         const foundIndex = this.state.problemSetList.findIndex(
           (problemSetInList) =>
-            problemSet.categoryCode === problemSetInList.categoryCode
+            aProblemSet.categoryCode === problemSetInList.categoryCode
         );
         if (foundIndex === -1) {
-          return problemSet.categoryCode;
+          return aProblemSet.categoryCode;
         }
       }
     }
