@@ -52,7 +52,7 @@ describe("Login Cypress", () => {
     loginHelper.clickLogOut();
   });
 
-  /*   it("it should display 'You are not authorised' when trying to access a protected route without login", () => {
+  it("it should display 'You are not authorised' when trying to access a protected route without login", () => {
     loginHelper.enterUsername(Cypress.env("HR_ID"));
     loginHelper.enterPassword(Cypress.env("HR_PASS"));
     loginHelper.clickSignIn();
@@ -64,6 +64,6 @@ describe("Login Cypress", () => {
     cy.wait("@logout");
 
     cy.visit("https://case-selfeval-frontend.herokuapp.com/home");
-    cy.contains("You are not authorised"); 
-  });*/
+    cy.contains("You are not authorised");
+  });
 });
