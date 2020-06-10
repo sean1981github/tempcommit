@@ -57,7 +57,12 @@ describe("Login Cypress", () => {
     loginHelper.enterPassword(Cypress.env("HR_PASS"));
     loginHelper.clickSignIn();
     cy.get('[aria-label="audio-loading"]');
+
+    cy.server();
+    cy.route("POST", "/users/logout").as("logout");
     loginHelper.clickLogOut();
+    cy.wait("@logout");
+
     cy.visit("https://case-selfeval-frontend.herokuapp.com/home");
     cy.contains("You are not authorised"); 
   });*/
