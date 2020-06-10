@@ -5,6 +5,7 @@ import Loader from "./Spinner";
 import HomePage from "./HomePage";
 import ProblemForm from "./ProblemForm";
 import ProblemConfirmation from "./ProblemConfirmation";
+import ProblemListForm from "./ProblemListForm";
 import QuizForm from "./QuizForm";
 import QuizTemplateForm from "./QuizTemplateForm";
 import QuizTemplateConfirmation from "./QuizTemplateConfirmation";
@@ -81,6 +82,30 @@ const Router = () => {
                 path="/problem/confirmation"
                 render={(props) => (
                   <ProblemConfirmation
+                    setLoggedIn={setLoggedIn}
+                    username={username}
+                    role={role}
+                    {...props}
+                  />
+                )}
+              />
+              <Route
+                exact
+                path="/problem/edit/:id"
+                render={(props) => (
+                  <ProblemListForm
+                    setLoggedIn={setLoggedIn}
+                    username={username}
+                    role={role}
+                    {...props}
+                  />
+                )}
+              />
+              <Route
+                exact
+                path="/problem/edit"
+                render={(props) => (
+                  <ProblemListForm
                     setLoggedIn={setLoggedIn}
                     username={username}
                     role={role}

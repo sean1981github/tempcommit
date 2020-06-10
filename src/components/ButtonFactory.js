@@ -11,7 +11,7 @@ const ButtonFactory = (props) => {
   return buttonInfo[0].buttons.map((button) => {
     return (
       <Button
-        key={button.id}
+        key={button.title}
         title={button.title}
         path={button.path}
         history={props.history}

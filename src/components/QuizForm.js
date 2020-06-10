@@ -61,7 +61,7 @@ const QuizForm = (props) => {
         Create Quiz
       </Typography>
       <form className={classes.form} noValidate autoComplete="off">
-        <Grid container justify="center" spacing="5">
+        <Grid container justify="center" spacing={5}>
           <Grid item xs={12} container className={classes.gridContainer}>
             <Grid item xs={4} container className={classes.gridContainer}>
               <Typography component="div" variant="h6">

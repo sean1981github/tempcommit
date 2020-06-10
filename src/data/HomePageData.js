@@ -23,7 +23,7 @@ const HomePageData = [
         title: "PROBLEM",
         buttons: [
           { title: "Create New Problem", path: "/problem/add", id: "3a" },
-          { title: "Edit Existing Problem", path: "", id: "3b" },
+          { title: "Edit Existing Problem", path: "/problem/edit", id: "3b" },
         ],
       },
       {

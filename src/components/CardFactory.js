@@ -8,7 +8,7 @@ const CardFactory = (props) => {
 
   return cardInfo[0].cards.map((card) => {
     return (
-      <Grid key={card.id} item>
+      <Grid key={card.title} item>
         <Card
           key={card.id}
           title={card.title}
